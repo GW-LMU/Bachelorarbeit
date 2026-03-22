@@ -24,3 +24,4 @@ Also Input Paramter:
 - https://numbbo.github.io/coco-doc/apidocs/cocoex/
 - https://github.com/numbbo/coco?tab=readme-ov-file
 - https://publica.fraunhofer.de/entities/publication/8eea9127-4f42-4cb7-b6ef-4274e9d68ad9
+- https://arxiv.org/abs/2410.24222
