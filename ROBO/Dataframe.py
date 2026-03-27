@@ -14,13 +14,17 @@ acq = ["IP", "EP", "NL"]
 vec_sample = list(range(1, n_sample + 1 ))
 vec_iter = list(range(1, iteration + 1 ))
 
-kombination = list(itertools.product(vec_fun,vec_dim, vec_var, acq, vec_iter, vec_sample))
+def df_kombination_function(vec_fun, vec_dim, vec_var, acq):
+    kombination = list(itertools.product(vec_fun,vec_dim, vec_var, acq))
+    df_kombination = pd.DataFrame(kombination, columns=["Funktion", "Dimension", "Surrogate_Model", "Acquisitions_Model", "Samle_Size", "Iteration", "MSE"])
+    df_kombination['Sample_Size'] = np.nan
+    df_kombination['Iteration'] = np.nan
+    df_kombination['MSE'] = np.nan
+    return df_kombination
 
-df_kombination = pd.DataFrame(kombination, columns=['Funktion','Dimension','Varianten', 'Acqisition', 'Sample', 'Iteration'])
 
-df_kombination['MSE'] = np.nan
-
-print(f"Anzahl Kombinationen :{len(df_kombination)}")
-print(df_kombination.head(10))
-print("...")
-print(df_kombination.tail(10))
+def df_kombination_function_number(vec_fun, vec_dim, vec_var, acq,vec_sample,vec_iter):
+    kombination = list(itertools.product(vec_fun,vec_dim, vec_var, acq, vec_sample, vec_iter))
+    df_kombination = pd.DataFrame(kombination, columns=["Funktion", "Dimension", "Surrogate_Model", "Acquisitions_Model", "Samle_Size", "Iteration", "MSE"])
+    df_kombination['MSE'] = np.nan
+    print(f"Anzahl Kombinationen :{len(df_kombination)}")
