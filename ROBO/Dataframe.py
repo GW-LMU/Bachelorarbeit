@@ -28,3 +28,10 @@ def df_kombination_function_number(vec_fun, vec_dim, vec_var, acq,vec_sample,vec
     df_kombination = pd.DataFrame(kombination, columns=["Funktion", "Dimension", "Surrogate_Model", "Acquisitions_Model", "Samle_Size", "Iteration", "MSE"])
     df_kombination['MSE'] = np.nan
     print(f"Anzahl Kombinationen :{len(df_kombination)}")
+    
+
+def df_count_kombination(vec_fun, vec_dim, vec_var, acq,vec_sample,vec_iter):
+    kombinations = len(vec_fun)*len(vec_dim)*len(vec_var)*len(acq)*len(vec_sample)*len(vec_iter)
+    print(f"Anzahl Kombinationen :{kombinations}")
+
+
