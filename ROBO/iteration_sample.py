@@ -12,19 +12,10 @@ import pandas as pd
 import pandas as pd
 import torch
 
-def iteration_sample_cal(
-    n_iteration,
-    n_samples,
-    train_X_tensor,
-    train_Y_tensor,
-    fun,
-    dimension,
-    model,
-    model_acquisition,
-    value_range
-):
+def iteration_sample_cal(n_iteration,n_samples,fun,dimension,model,model_acquisition,value_range):
     # Name erzeugen
     name = f"df_{fun}_{dimension}_{model}_{model_acquisition}"
+    print(name)
 
     # Leeres DataFrame
     df = pd.DataFrame(columns=[
@@ -37,11 +28,13 @@ def iteration_sample_cal(
         "MSE"
     ])
 
-    train_X = train_X_tensor.clone()
-    train_Y = train_Y_tensor.clone()
+    for n in list(range(1, n_samples + 1 )):
+        training_data = train_data_problem(fun, dimension, n_samples, value_range)
 
-    for n in range(n_samples):
-        for i in range(n_iteration):
+        train_X = training_data[0]
+        train_Y = training_data[1]
+
+        for i in list(range(1, n_samples + 1 )):
 
             trained_model = train_surrogatmodell(model, train_X, train_Y)
 

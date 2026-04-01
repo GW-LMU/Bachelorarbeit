@@ -17,33 +17,27 @@ n_samples = 10
 # Input für df_kombination 
 #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
 
-funktionen = [0,1,2,3,4,5,6,7,8,9,10]
+funktionen = [ 1,2,3]
 model = ["GP", "LP"]
 model_acquisition = ["ei"]
 fun = 1                             
 value_range = (-5, 5)      
-dimension = [1, 2]
+dimension = [2, 3]
 vec_sample = list(range(1, n_samples + 1 ))
 vec_iter = list(range(1, n_iteration + 1 ))
 
 dfs  = {}
 
-#df_count_kombination(funktionen, dimension, model, model_acquisition,n_samples, n_iteration ) # hier nummerische Berechung schlauer 2*3*4*5
+df_count_kombination(funktionen, dimension, model, model_acquisition,vec_sample, vec_iter) # hier nummerische Berechung schlauer 2*3*4*5
 df_kombination = df_kombination_function(funktionen, dimension, model, model_acquisition)               
 print(df_kombination.head(5))
 print("...")
 print(df_kombination.tail(5))
 
 for row in df_kombination.itertuples():
-    Train = train_data_problem(fun,n_samples,value_range,dimension)
 
-    # Inizilaisierung der Traingsdaten 
-    train_X_tensor = Train[0]
-    train_Y_tensor = Train[1]
-
-
-    iteration_sample_cal(n_iteration, n_samples, train_X_tensor, train_Y_tensor, row.Funktion, row.Dimension,
-                         row.Surrogate_Model, row.Acquisitions_Model)
+    iteration_sample_cal(n_iteration, n_samples, row.Funktion, row.Dimension,
+                         row.Surrogate_Model, row.Acquisitions_Model, value_range)
     name = iteration_sample_cal[1]
     dfs[name] = iteration_sample_cal(...)[0]
 

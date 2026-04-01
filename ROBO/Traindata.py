@@ -4,7 +4,10 @@ import cocoex
 import random
 import numpy as np
 
-def train_data_problem(fun, n_samples, value_range, dimension):
+def train_data_problem(fun, dimension, n_samples, value_range ):
+    fun = int(fun)
+    dimension = int(dimension)
+    n_samples = int(n_samples)
    
     # Setze Seed für Reproduzierbarkeit
     seed = 42
