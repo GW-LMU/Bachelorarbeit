@@ -25,7 +25,8 @@ Also Input Paramter:
 - https://github.com/numbbo/coco?tab=readme-ov-file
 - https://publica.fraunhofer.de/entities/publication/8eea9127-4f42-4cb7-b6ef-4274e9d68ad9
 - https://arxiv.org/abs/2410.24222
-
+- https://arxiv.org/abs/2002.09038
+- https://arxiv.org/pdf/1810.10775
 
 
 
