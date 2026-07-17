@@ -6,6 +6,10 @@ from IPython.display import display
 import torch
 import matplotlib.pyplot as plt
 from scipy.stats import norm
+from coco_benchmark import evaluate_bbob_function
+from coco_benchmark import get_bbob_optimum
+from coco_benchmark import compute_regret
+from coco_benchmark import waehle_und_berechne_variante
 #import cocoex
 #from botorch.models import SingleTaskGP
 #from botorch.fit import fit_gpytorch_mll
@@ -349,65 +353,6 @@ def berechne_iteration(
     )
 
 
-def berechne_train_Y(train_X_np, current_function_dim, minimize=False):
-    train_Y_np = np.array(
-        [
-            [-current_function_dim(x) if minimize else current_function_dim(x)]
-            for x in train_X_np
-        ],
-        dtype=np.float64
-    )
-
-    return train_Y_np
-
-def test_GP(train_X, train_Y, optimal_Y):
-    # 1) Gaussian Process Modell
-    model = SingleTaskGP(train_X=train_X, train_Y=train_Y)
-
-    mll = ExactMarginalLogLikelihood(model.likelihood, model)
-    fit_gpytorch_mll(mll)
-
-    # 2) Aktuell bester beobachteter Funktionswert
-    best_f = train_Y.max()
-
-    # 3) EI-Akquisitionsfunktion
-    ei = LogExpectedImprovement(model=model, best_f=best_f)
-
-    # 4) Nächsten Punkt finden
-    bounds = torch.tensor([[0.0], [1.0]], dtype=train_X.dtype, device=train_X.device)
-
-    candidate, acq_value = optimize_acqf(
-        acq_function=ei,
-        bounds=bounds,
-        q=1,
-        num_restarts=10,
-        raw_samples=128,
-    )
-
-    print("Nächster Punkt:", candidate)
-    print("Akquisitionswert:", acq_value)
-
-    # 5) Zielfunktion am neuen Punkt auswerten
-    new_Y = berechne_train_Y(candidate, current_function_dim, minimize=False)
-
-    if new_Y.ndim == 1:
-        new_Y = new_Y.reshape(-1, 1)
-
-    # 6) Daten erweitern
-    train_X = torch.cat([train_X, candidate], dim=0)
-    train_Y = torch.cat([train_Y, new_Y], dim=0)
-
-    # 7) Regret berechnen
-    best_observed_Y = train_Y.max()
-    regret = optimal_Y - best_observed_Y
-
-    print("Bester bisheriger Wert:", best_observed_Y.item())
-    print("Optimum:", optimal_Y)
-    print("Regret:", regret.item())
-
-    return train_X, train_Y, regret
-            
-
 
 
 ####################################################################
@@ -437,10 +382,10 @@ suite = cocoex.Suite("bbob", "", "")
 for param_idx, param_row in df_gesamt.iterrows():
 
     ### Parameter aus df_gesamt laden ###
-    func = param_row["Funktion"]
-    dim = param_row["Dimension"]
+    funktion = param_row["Funktion"]
+    dimension = param_row["Dimension"]
     surrogate_model = param_row["Surrogate_Model"]
-    acquisition_func = param_row["Acquisitions_Model"]
+    acquisition_funktion = param_row["Acquisitions_Model"]
     initial_sample_size = param_row["Sample_Size_Initial"]
     max_iteration = int(param_row["Iteration"])
 
@@ -460,8 +405,15 @@ for param_idx, param_row in df_gesamt.iterrows():
         (df_gesamt_iteration["Iteration"] == max_iteration)
     )
 
+    # Holt sich das Optimum für gegebene Paramter Cofuguatation
+
+    x_opt, f_opt = get_bbob_optimum(funktion, dimension, instance=instance, suite=suite, maximize=maximize)
+
     ### Tensor-Blöcke durchgehen: Var_1 bis Var_n ###
     for n in range(n_sample_stat):
+
+
+        # Sampels vorberieten und X und Y Werte berehcen 
 
         tensor_block = tensor[n]
         tensor_block_torch = torch.as_tensor(tensor_block, dtype=torch.double)
@@ -470,10 +422,10 @@ for param_idx, param_row in df_gesamt.iterrows():
 
         # Berechung Inital Sample 
         # X-Werte als NumPy ziehen
-        train_X_np = tensor_block[:initial_sample_size, :dim]
+        train_X_np = tensor_block[:initial_sample_size, :dimension]
 
         # Y-Werte mit der Funktion berechnen
-        train_Y_np = berechne_train_Y(train_X_np, current_function_dim, minimize=False)
+        train_Y_np = evaluate_bbob_function(trian_X_np, func, dim)
         
         train_X = torch.as_tensor(train_X_np, dtype=torch.double)
         train_Y = torch.as_tensor(train_Y_np, dtype=torch.double)
@@ -481,19 +433,30 @@ for param_idx, param_row in df_gesamt.iterrows():
         ### Iterationen durchgehen ###
         for j in range(1, max_iteration + 1):
 
-            #################################################################
-            ergebnis = test_GP(train_X, train_Y )
+            ####################
+
+            next_x = waehle_und_berechne_variante(surrogate_model, acquisition_funktion, train_X, train_Y, dimension,
+                                                    lower_bound=minus_area, upper_bound=plus_area)
+
+            ###Punkt hinzufügen#####
+
+            # next_point von Torch zu NumPy
+            next_point_np = next_x.numpy()
+
+            # neuen Y-Wert für den vorgeschlagenen Punkt berechnen
+            next_value_np = evaluate_bbob_function(next_point_np, func, dim)
+
+            # neuen Punkt an train_X_np / train_Y_np anhängen
+            train_X_np = np.vstack([train_X_np, next_point_np.reshape(1, -1)])
+            train_Y_np = np.append(train_Y_np, next_value_np)
 
 
+            ### eta-reget berechen 
+                        
+                        
+            best_so_far, simple_regret, immediate_regret, x_distances = compute_regret(train_X_np, train_Y_np, x_opt, f_opt)
 
-
-
-
-
-
-
-
-
+            ergebnis = simple_regret
 
 
 
