@@ -1,5 +1,11 @@
 import numpy as np
+import torch
 import cocoex
+from Standard_PY import run_gausian_prozess
+from Relevance_Pursuit import run_relevance_pursuit
+from Imprecise_GP import run_imprecise_gausian_prozess
+from StableOpt import run_stable_opt
+from DRBO import run_drbo
 
 
 def evaluate_bbob_function(x, funktion, dimension, instance=1, suite=None, maximize=False):
@@ -33,8 +39,6 @@ def evaluate_bbob_function(x, funktion, dimension, instance=1, suite=None, maxim
     y_val = problem(x_numpy)
     if maximize:
         y_val = -y_val
-
-    print(f"Funktion {funktion}, Dimension {dimension}: f({x_numpy}) = {y_val:.6f}")
 
     return y_val
 
@@ -134,7 +138,7 @@ if __name__ == "__main__":
 
 
 def waehle_und_berechne_variante(surrogate_model, acquisition_func, train_X, train_Y, dim,
-                                  lower_bound=minus_area, upper_bound=plus_area):
+                                  lower_bound=None, upper_bound=None):
     """
     Nimmt eine Zeile aus df_suggo_aqui (surrogate_model, acquisition_func) und führt
     genau die dazu passende Variante aus: Surrogatmodell fitten, passende Akquisitions-
@@ -145,40 +149,33 @@ def waehle_und_berechne_variante(surrogate_model, acquisition_func, train_X, tra
 
     Rückgabe: next_x (torch.double, shape [dim]), acq_value (torch.double, Skalar)
     """
-    bounds = torch.tensor(
-        [[lower_bound] * dim, [upper_bound] * dim], dtype=torch.double
-    )
+    if lower_bound is None:
+        lower_bound = -1000
+    if upper_bound is None:
+        upper_bound = 1000
 
     if surrogate_model == "GausianProzess":
-        model = _gp_fitten(train_X, train_Y)
-        acqf = _gp_acquisition_waehlen(acquisition_func, model, train_Y)
+        return run_gausian_prozess(train_X, train_Y, dim, acquisition_func,
+                                    lower_bound=lower_bound, upper_bound=upper_bound)
 
     elif surrogate_model == "Imprecise_GausianProzess_Rodemann":
-        raise NotImplementedError(
-            "Variante 'Imprecise_GausianProzess_Rodemann' ist noch nicht implementiert."
-        )
+        return run_imprecise_gausian_prozess(train_X, train_Y, dim, acquisition_func,
+                                              lower_bound=lower_bound, upper_bound=upper_bound)
 
     elif surrogate_model == "AIRBO":
         raise NotImplementedError("Variante 'AIRBO' ist noch nicht implementiert.")
 
     elif surrogate_model == "STABLEOPT":
-        raise NotImplementedError("Variante 'STABLEOPT' ist noch nicht implementiert.")
+        return run_stable_opt(train_X, train_Y, dim, acquisition_func,
+                               lower_bound=lower_bound, upper_bound=upper_bound)
 
     elif surrogate_model == "DRBO":
-        raise NotImplementedError("Variante 'DRBO' ist noch nicht implementiert.")
+        return run_drbo(train_X, train_Y, dim, acquisition_func,
+                         lower_bound=lower_bound, upper_bound=upper_bound)
 
     elif surrogate_model == "Relevance Pursuit":
-        raise NotImplementedError("Variante 'Relevance Pursuit' ist noch nicht implementiert.")
+        return run_relevance_pursuit(train_X, train_Y, dim, acquisition_func,
+                                      lower_bound=lower_bound, upper_bound=upper_bound)
 
     else:
         raise ValueError(f"Unbekanntes Surrogatmodell: {surrogate_model}")
-
-    next_x, acq_value = optimize_acqf(
-        acqf,
-        bounds=bounds,
-        q=1,
-        num_restarts=10,
-        raw_samples=512,
-    )
-
-    return next_x.squeeze(0), acq_value

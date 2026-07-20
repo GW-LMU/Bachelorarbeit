@@ -10,12 +10,14 @@ from coco_benchmark import evaluate_bbob_function
 from coco_benchmark import get_bbob_optimum
 from coco_benchmark import compute_regret
 from coco_benchmark import waehle_und_berechne_variante
-#import cocoex
-#from botorch.models import SingleTaskGP
-#from botorch.fit import fit_gpytorch_mll
-#from botorch.acquisition.analytic import LogExpectedImprovement
-#from botorch.optim import optimize_acqf
-#from gpytorch.mlls import ExactMarginalLogLikelihood
+from Standard_PY import run_gausian_prozess
+import cocoex
+from botorch.models import SingleTaskGP
+from botorch.fit import fit_gpytorch_mll
+from botorch.acquisition.analytic import LogExpectedImprovement
+from botorch.optim import optimize_acqf
+from gpytorch.mlls import ExactMarginalLogLikelihood
+import torch
 
 ########### Laden der Daten ##############
 #df_gesamt = pd.read_excel(r"C:\Users\gabri\Download - ICH\Bachelorarbeit\DF_GESAMT.xlsx")
@@ -25,24 +27,31 @@ from coco_benchmark import waehle_und_berechne_variante
 
 #########
 # [1,2,5,10,25,50,100]
-n_sample_init =[1,2,5,20]
+n_sample_init =[1,
+                2,
+                #5,
+                #20
+                ]
 
 
 # Anzahl der Wiedrholten Verusche
 
-n_sample_stat = 10
+n_sample_stat = 5
 
 # Anzahl der Iteration die in einen Prozess geben bestimmter Paramter berehcnet wird
-n_iteration = [20]
-iteration = 20
+n_iteration = [10]
+iteration = 10
 
 # Die Folgenden Funktion stehen zu Auswahl und können abgefragt werdern 
 # [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
-vec_fun = [1,2,3]
+vec_fun = [1,2]
 
 # Dimensionen an denen der Algorithmus getetest wird
 # [1,2,5,10, 15, 25, 50]
-vec_dim = [1,2,5,10]
+vec_dim = [2,
+           5,
+           #10
+           ]
 
 
 vec_var = ["GP", "IGP"]
@@ -50,9 +59,31 @@ acq = ["UP", "EP", "NL"]
 #vec_sample = list(range(1, n_sample + 1 ))
 #vec_iter = list(range(1, iteration + 1 ))
 
+
+speicherpfad = r"C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\ROBO"
+
 df_suggo_aqui = pd.DataFrame({
-    "Surrogate_Model": ["GausianProzess", "GausianProzess", "GausianProzess", "Imprecise_GausianProzess_Rodemann", "AIRBO", "AIRBO", "STABLEOPT","DRBO", "Relevance Pursuit"],
-    "Acquisitions_Model": ["LCB", "UCB", "EI", "GLCB", "UCB","EI","UCB", "distributionally robust UCB-Akquisition", "qLogNEI"]
+    "Surrogate_Model": ["GausianProzess", 
+                        #"GausianProzess", 
+                        #"GausianProzess", 
+                        #"Imprecise_GausianProzess_Rodemann" 
+                        #"AIRBO", 
+                        #"AIRBO", 
+                        #"STABLEOPT",
+                        #"DRBO", 
+                        #"Relevance Pursuit"
+                        ],
+
+    "Acquisitions_Model": ["LCB", 
+                           #"UCB", 
+                           #"EI", 
+                           #"GLCB", 
+                           #"UCB",
+                           #"EI",
+                           #"UCB", 
+                           #"distributionally robust UCB-Akquisition", 
+                           #"qLogNEI"
+                           ]
 })
 
 
@@ -234,123 +265,65 @@ pd.DataFrame(tensor_noise_2d).to_excel(
 )
 
 
-def plot_diff_histogram(
-    tensor1: np.ndarray,
-    tensor2: np.ndarray,
-    bins: int = 50,
-    title: str = "Histogramm der Differenz",
-    speicherpfad: str | None = None,
-):
-    assert tensor1.shape == tensor2.shape, "Tensoren müssen dieselbe Form haben"
+# def plot_diff_histogram(
+#     tensor1: np.ndarray,
+#     tensor2: np.ndarray,
+#     bins: int = 50,
+#     title: str = "Histogramm der Differenz",
+#     speicherpfad: str | None = None,
+# ):
+#     assert tensor1.shape == tensor2.shape, "Tensoren müssen dieselbe Form haben"
 
-    # --- Differenz berechnen ---
-    diff = tensor1 - tensor2
-    werte = diff.flatten()
-    n_werte = werte.size
+#     # --- Differenz berechnen ---
+#     diff = tensor1 - tensor2
+#     werte = diff.flatten()
+#     n_werte = werte.size
 
-    # --- Statistik für die Normalverteilung schätzen ---
-    mu = werte.mean()
-    sigma = werte.std()
+#     # --- Statistik für die Normalverteilung schätzen ---
+#     mu = werte.mean()
+#     sigma = werte.std()
 
-    # --- Histogramm plotten ---
-    fig, ax = plt.subplots(figsize=(8, 5))
-    counts, bin_edges, _ = ax.hist(
-        werte, bins=bins, color="steelblue", edgecolor="black",
-        alpha=0.7, label="Häufigkeit der Differenzwerte"
-    )
+#     # --- Histogramm plotten ---
+#     fig, ax = plt.subplots(figsize=(8, 5))
+#     counts, bin_edges, _ = ax.hist(
+#         werte, bins=bins, color="steelblue", edgecolor="black",
+#         alpha=0.7, label="Häufigkeit der Differenzwerte"
+#     )
 
-    # --- Normalverteilung passend zur Histogramm-Skala (Counts) überlagern ---
-    bin_width = bin_edges[1] - bin_edges[0]
-    x = np.linspace(werte.min(), werte.max(), 500)
-    pdf = norm.pdf(x, loc=mu, scale=sigma)
-    pdf_skaliert = pdf * n_werte * bin_width  # von Dichte auf Counts skaliert
+#     # --- Normalverteilung passend zur Histogramm-Skala (Counts) überlagern ---
+#     bin_width = bin_edges[1] - bin_edges[0]
+#     x = np.linspace(werte.min(), werte.max(), 500)
+#     pdf = norm.pdf(x, loc=mu, scale=sigma)
+#     pdf_skaliert = pdf * n_werte * bin_width  # von Dichte auf Counts skaliert
 
-    ax.plot(x, pdf_skaliert, color="firebrick", linewidth=2,
-            label=f"N(μ={mu:.3f}, σ={sigma:.3f})")
+#     ax.plot(x, pdf_skaliert, color="firebrick", linewidth=2,
+#             label=f"N(μ={mu:.3f}, σ={sigma:.3f})")
 
-    ax.set_xlabel("Differenzwert")
-    ax.set_ylabel("Anzahl")
-    ax.set_title(f"{title}\n(Anzahl Werte: N = {n_werte})")
-    ax.legend()
-    fig.tight_layout()
+#     ax.set_xlabel("Differenzwert")
+#     ax.set_ylabel("Anzahl")
+#     ax.set_title(f"{title}\n(Anzahl Werte: N = {n_werte})")
+#     ax.legend()
+#     fig.tight_layout()
 
-    if speicherpfad:
-        fig.savefig(speicherpfad, dpi=150)
-        print(f"Plot gespeichert unter: {speicherpfad}")
-    else:
-        plt.show()
+#     if speicherpfad:
+#         fig.savefig(speicherpfad, dpi=150)
+#         print(f"Plot gespeichert unter: {speicherpfad}")
+#     else:
+#         plt.show()
 
-    plt.close(fig)
-    return diff
-
-
+#     plt.close(fig)
+#     return diff
 
 
-diff = plot_diff_histogram(
-        tensor, tensor_noise,
-        bins=40,
-        title="Beispiel: Tensor A - Tensor B",
-        speicherpfad="diff_histogram.png",  # oder None für direkte Anzeige
-    )
-print("Form der Differenz:", diff.shape)
 
 
-##########################################################################################
-######### Zusatz Funktionen ###########
-##########################################################################################
-
-
-def choose_model(model):
-    models = {
-        "GausianProzess": None,  # TODO: durch echte Klasse/Funktion ersetzen
-        "Imprecise_GausianProzess_Rodemann": None,
-        "AIRBO": None,
-        "STABLEOPT": None,
-        "DRBO": None,
-        "Relevance Pursuit": None,
-    }
-
-    if model not in models:
-        raise ValueError(f"Unbekanntes Surrogate-Modell: {model}")
-
-    return models[model]
-
-
-def choose_acquisition(acquisition):
-    acquisitions = {
-        "LCB": None,  # TODO: durch echte Klasse/Funktion ersetzen
-        "UCB": None,
-        "EI": None,
-        "GLCB": None,
-        "distributionally robust UCB-Akquisition": None,
-        "qLogNEI": None,
-    }
-
-    if acquisition not in acquisitions:
-        raise ValueError(f"Unbekannte Acquisition-Funktion: {acquisition}")
-
-    return acquisitions[acquisition]
-     
-
-# Kleine Testfunktion für Speicherfunktion der Datframes 
-def berechne_iteration(
-    func,
-    dim,
-    sample,
-    surrogate_model,
-    acquisition_func,
-    initial_sample_size,
-    iteration
-):
-    sample_value = float(np.mean(sample))
-
-    return (
-        func * 10000
-        + dim * 1000
-        + initial_sample_size * 100
-        + sample_value
-        + iteration
-    )
+#diff = plot_diff_histogram(
+#        tensor, tensor_noise,
+#        bins=40,
+#        title="Beispiel: Tensor A - Tensor B",
+#        speicherpfad="diff_histogram.png",  # oder None für direkte Anzeige
+#    )
+#print("Form der Differenz:", diff.shape)
 
 
 
@@ -389,25 +362,23 @@ for param_idx, param_row in df_gesamt.iterrows():
     initial_sample_size = param_row["Sample_Size_Initial"]
     max_iteration = int(param_row["Iteration"])
 
-    ### Modell und Acquisition auswählen ###
-    current_surrogate_model = choose_model(surrogate_model)
-    current_acquisition_func = choose_acquisition(acquisition_func)
+ 
 
-    current_function_dim = suite.get_problem_by_function_dimension_instance(func, dim, 1 )
+    current_function_dim = suite.get_problem_by_function_dimension_instance(funktion, dimension, 1 )
 
     ### passende Zeilen in df_gesamt_iteration finden ###
     mask_parameter = (
-        (df_gesamt_iteration["Funktion"] == func) &
-        (df_gesamt_iteration["Dimension"] == dim) &
+        (df_gesamt_iteration["Funktion"] == funktion) &
+        (df_gesamt_iteration["Dimension"] == dimension) &
         (df_gesamt_iteration["Surrogate_Model"] == surrogate_model) &
-        (df_gesamt_iteration["Acquisitions_Model"] == acquisition_func) &
+        (df_gesamt_iteration["Acquisitions_Model"] == acquisition_funktion) &
         (df_gesamt_iteration["Sample_Size_Initial"] == initial_sample_size) &
         (df_gesamt_iteration["Iteration"] == max_iteration)
     )
 
     # Holt sich das Optimum für gegebene Paramter Cofuguatation
 
-    x_opt, f_opt = get_bbob_optimum(funktion, dimension, instance=instance, suite=suite, maximize=maximize)
+    x_opt, f_opt = get_bbob_optimum(funktion, dimension, instance=1, suite=suite, maximize = False)
 
     ### Tensor-Blöcke durchgehen: Var_1 bis Var_n ###
     for n in range(n_sample_stat):
@@ -415,27 +386,30 @@ for param_idx, param_row in df_gesamt.iterrows():
 
         # Sampels vorberieten und X und Y Werte berehcen 
 
-        tensor_block = tensor[n]
+        tensor_block = tensor_noise[n]
         tensor_block_torch = torch.as_tensor(tensor_block, dtype=torch.double)
 
         var_col = f"Var_{n + 1}"
 
-        # Berechung Inital Sample 
+        # Berechung Inital Sample
         # X-Werte als NumPy ziehen
         train_X_np = tensor_block[:initial_sample_size, :dimension]
 
-        # Y-Werte mit der Funktion berechnen
-        train_Y_np = evaluate_bbob_function(trian_X_np, func, dim)
-        
+        # Y-Werte mit der Funktion berechnen (pro Zeile einzeln, da evaluate_bbob_function
+        # nur einen einzelnen Punkt auf einmal auswertet)
+        train_Y_np = np.array([
+            evaluate_bbob_function(x, funktion, dimension) for x in train_X_np
+        ])
+
         train_X = torch.as_tensor(train_X_np, dtype=torch.double)
-        train_Y = torch.as_tensor(train_Y_np, dtype=torch.double)
+        train_Y = torch.as_tensor(train_Y_np, dtype=torch.double).unsqueeze(-1)
 
         ### Iterationen durchgehen ###
         for j in range(1, max_iteration + 1):
 
             ####################
 
-            next_x = waehle_und_berechne_variante(surrogate_model, acquisition_funktion, train_X, train_Y, dimension,
+            next_x, acq_value = waehle_und_berechne_variante(surrogate_model, acquisition_funktion, train_X, train_Y, dimension,
                                                     lower_bound=minus_area, upper_bound=plus_area)
 
             ###Punkt hinzufügen#####
@@ -444,11 +418,16 @@ for param_idx, param_row in df_gesamt.iterrows():
             next_point_np = next_x.numpy()
 
             # neuen Y-Wert für den vorgeschlagenen Punkt berechnen
-            next_value_np = evaluate_bbob_function(next_point_np, func, dim)
+            next_value_np = evaluate_bbob_function(next_point_np, funktion, dimension)
 
             # neuen Punkt an train_X_np / train_Y_np anhängen
             train_X_np = np.vstack([train_X_np, next_point_np.reshape(1, -1)])
             train_Y_np = np.append(train_Y_np, next_value_np)
+
+            # Torch-Tensoren nachziehen, damit das GP im nächsten Schritt
+            # auch die neu vorgeschlagenen Punkte sieht
+            train_X = torch.as_tensor(train_X_np, dtype=torch.double)
+            train_Y = torch.as_tensor(train_Y_np, dtype=torch.double).unsqueeze(-1)
 
 
             ### eta-reget berechen 
@@ -456,10 +435,10 @@ for param_idx, param_row in df_gesamt.iterrows():
                         
             best_so_far, simple_regret, immediate_regret, x_distances = compute_regret(train_X_np, train_Y_np, x_opt, f_opt)
 
-            ergebnis = simple_regret
+            ergebnis = simple_regret[-1]
 
 
-
+            print(f"Funktion {funktion}, Dimension {dimension}: Modell:={surrogate_model}, Aqui={acquisition_funktion},Tensorblock={n} Iteration={j}")
             #################################################################
 
             # passende Zeile: gleiche Parameter + konkrete iteration

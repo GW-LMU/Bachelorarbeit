@@ -1,56 +1,68 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import scipy
-from scipy.special import expit  # Sigmoid
-import random
-import uncertainty_aware_bo
-from uncertainty_aware_bo import BayesOptimizer
+import torch
+from uncertainty_aware_bo import BayesOptimizer, matern
 
 
-def imprecise_gp(train_X, train_Y, kernel, c, length_scale, outputscale):
-
-    # Falls train_x und train_y schon existieren:
-    train_X = np.asarray(train_X).ravel()
-    train_Y = np.asarray(train_Y).ravel()
-    
+minus_area = -1000
+plus_area = 1000
 
 
-    ## Inizalisieren der BaysianOptimizer 
+def run_imprecise_gausian_prozess(train_X, train_Y, dim, acquisition_func,
+                                   lower_bound=minus_area, upper_bound=plus_area,
+                                   kernel=matern, c=50.0, length_scale=1.0, outputscale=1.0,
+                                   n_candidates=500):
+    """
+    Führt die Imprecise-Gaussian-Process-Variante (Rodemann) für eine Iteration aus:
+    1) BayesOptimizer aus uncertainty_aware_bo.py mit den bisherigen Beobachtungen bauen
+    2) passende Akquisitionsfunktion anhand von acquisition_func wählen ("LCB", "GLCB")
+    3) nächsten Punkt über ein Kandidatenraster im Suchraum vorschlagen
 
-    bo = BayesOptimizer(x_obs=train_X,
-                        y_obs=train_Y,
-                        kernel=kernel,
-                        c=c,
-                        length_scale=length_scale,
-                        outputscale=outputscale)
-    
-    # Kandidatenbereich definieren
-    x_min = train_X.min()
-    x_max = train_Y.max()
+    Hinweis: BayesOptimizer arbeitet mit skalaren Kernel-Distanzen (np.subtract.outer)
+    und unterstützt daher nur den 1D-Fall (dim=1). Für dim>1 wird bewusst ein
+    NotImplementedError geworfen, statt mathematisch falsche Ergebnisse zu liefern.
 
-    x_candidates = np.linspace(x_min, x_max, 500)
+    train_X : torch.double, shape [n, dim]
+    train_Y : torch.double, shape [n, 1] (Maximierungs-Konvention, siehe coco_benchmark.py)
+    dim     : int, Dimension des Suchraums
 
-    # Surrogatemodell berechnen
-    means = []
-    variances = []
+    Rückgabe: next_x (torch.double, shape [dim]), acq_value (torch.double, Skalar)
+    """
+    if dim != 1:
+        raise NotImplementedError(
+            "Imprecise_GausianProzess_Rodemann (BayesOptimizer) unterstützt aktuell nur "
+            f"dim=1, da die Kernelfunktionen (matern/rbf) auf skalaren Distanzen basieren. "
+            f"Angefragt wurde dim={dim}."
+        )
 
-    for x in x_candidates:
-        mu, var = bo.predict_posterior(x)
-        means.append(mu)
-        variances.append(var)
+    x_obs = train_X.squeeze(-1).detach().cpu().numpy()
+    y_obs = train_Y.squeeze(-1).detach().cpu().numpy()
 
-    means = np.array(means)
-    variances = np.maximum(np.array(variances), 0)
+    # 1) Modell mit den bisherigen Beobachtungen aufbauen
+    bo = BayesOptimizer(
+        x_obs=x_obs,
+        y_obs=y_obs,
+        kernel=kernel,
+        c=c,
+        length_scale=length_scale,
+        outputscale=outputscale,
+    )
 
-    # Acquisition Function berechnen
-    acquisition_values = np.array([bo.PROBO(x) for x in x_candidates])
+    # 2) Akquisitionsfunktion abfragen und passend wählen
+    if acquisition_func == "LCB":
+        af = bo.UCB
+    elif acquisition_func == "GLCB":
+        af = bo.PROBO
+    else:
+        raise ValueError(
+            f"Unbekannte Akquisitionsfunktion für Imprecise_GausianProzess_Rodemann: {acquisition_func}"
+        )
 
-    # Bestes nächstes x auswählen
-    next_x = x_candidates[np.argmax(acquisition_values)]
+    # 3) Kandidatenraster über den gesamten Suchraum, bestes x auswählen
+    x_candidates = np.linspace(lower_bound, upper_bound, n_candidates)
+    acquisition_values = np.array([af(x) for x in x_candidates])
 
-    
+    best_idx = np.argmax(acquisition_values)
+    next_x = torch.tensor([x_candidates[best_idx]], dtype=torch.double)
+    acq_value = torch.tensor(acquisition_values[best_idx], dtype=torch.double)
 
-
-
-
-
+    return next_x, acq_value
