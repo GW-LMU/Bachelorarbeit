@@ -1,0 +1,5 @@
+task_id,combination_id,tensor_block,funktion,dimension,surrogate_model,acquisition_model,sample_size_initial,max_iteration,x_opt_approx,f_opt_approx
+0,0,0,1,2,GausianProzess,EI,5,200,"[-4.866855457149134, 4.630860078864389]",139.18788118839745
+1,0,1,1,2,GausianProzess,EI,5,200,"[-4.866855457149134, 4.630860078864389]",139.18788118839745
+2,0,2,1,2,GausianProzess,EI,5,200,"[-4.866855457149134, 4.630860078864389]",139.18788118839745
+3,0,3,1,2,GausianProzess,EI,5,200,"[-4.866855457149134, 4.630860078864389]",139.18788118839745

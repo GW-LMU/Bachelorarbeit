@@ -1,0 +1,169 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{titlesec}
+
+\definecolor{codebg}{RGB}{242,242,242}
+\definecolor{codefg}{RGB}{40,40,40}
+
+\lstset{
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\small\color{codefg},
+  breaklines=true,
+  frame=single,
+  framerule=0pt,
+  xleftmargin=4pt,
+  xrightmargin=4pt,
+  framesep=6pt,
+  columns=fullflexible,
+  showstringspaces=false,
+}
+
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!50!black,
+  urlcolor=blue!50!black,
+}
+
+\title{\textbf{ROBO\_NEU -- Ablauf f\"ur verteilte BO-Benchmarks\\auf der LRZ Compute Cloud}}
+\author{}
+\date{Stand: 05.08.2026}
+
+\begin{document}
+\maketitle
+\vspace{-1.5em}
+\noindent\hrulefill
+
+\section{\"Uberblick}
+
+\texttt{ROBO\_NEU} rechnet BO-Benchmarks (Bayessche Optimierung auf BBOB/COCO-Funktionen)
+\"uber mehrere unabh\"angige LRZ-Compute-Cloud-VMs parallel. Jede VM verarbeitet ihren
+eigenen Task-Chunk mit mehreren Worker-Prozessen. Es gibt \textbf{keine zentrale
+Steuerung} -- jede VM wird einzeln angesprochen.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{p{3.2cm} p{5.2cm} p{5.2cm}}
+\toprule
+\textbf{Begriff} & \textbf{Bedeutung} & \textbf{Hinweis} \\
+\midrule
+VM = OpenStack Instance & 1 VM entspricht immer genau 1 Instance & Anzahl \"uber LRZ-Kontingent (Quota) begrenzt \\
+\texttt{instance\_0 ... instance\_N} & Nur Ordnernamen f\"ur Task-Chunks in ROBO\_NEU & Kein Bezug zum OpenStack-Begriff \\
+Worker & Parallele Prozesse pro VM & Richtwert: 1 Worker pro vCPU \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Ablaufdiagramm}
+
+\begin{lstlisting}
+Dein PC (prepare_tasks.py, split_tasks.py)
+      |
+      +-- scp instance_0 --> VM 0 -- SSH -- run_instance.py --workers N
+      +-- scp instance_1 --> VM 1 -- SSH -- run_instance.py --workers N
+      +-- scp instance_2 --> VM 2 -- SSH -- run_instance.py --workers N
+      +-- scp instance_3 --> VM 3 -- SSH -- run_instance.py --workers N
+                                                                    |
+Dein PC <-- scp status.json / results.csv zurueck von jeder VM  <--+
+      |
+   merge_results.py --> results_gesamt.xlsx
+\end{lstlisting}
+
+\section{Schritt-f\"ur-Schritt-Anleitung}
+
+\subsection{Schritt 1 -- Einmalig zentral (lokal oder auf VM 0)}
+
+Erzeugt die vollst\"andige Task-Liste und teilt sie in Chunks auf, einen pro VM.
+
+\begin{lstlisting}[language=bash]
+python prepare_tasks.py
+python split_tasks.py --instanzen 4
+\end{lstlisting}
+
+Ergebnis: \texttt{data/instances/instance\_0} \dots \texttt{instance\_3}, jeweils mit
+\texttt{tasks.csv} (eigener Anteil) und \texttt{tensor\_noise.npy} (identische Kopie).
+
+\subsection{Schritt 2 -- Pro VM: Code + Daten hochladen}
+
+F\"ur jede VM einmal wiederholen (Code z.\,B. per \texttt{git clone}, Daten per
+\texttt{scp}/\texttt{rsync}):
+
+\begin{lstlisting}[language=bash]
+scp -r data/instances/instance_0 user@vm0-ip:~/robo_neu/
+scp -r data/instances/instance_1 user@vm1-ip:~/robo_neu/
+scp -r data/instances/instance_2 user@vm2-ip:~/robo_neu/
+scp -r data/instances/instance_3 user@vm3-ip:~/robo_neu/
+\end{lstlisting}
+
+\subsection{Schritt 3 -- Pro VM: einloggen und Prozess starten}
+
+Jede VM bekommt eine eigene SSH-Session. \texttt{tmux} sorgt daf\"ur, dass der Prozess
+bei SSH-Abbruch weiterl\"auft:
+
+\begin{lstlisting}[language=bash]
+ssh user@vm0-ip
+cd ~/robo_neu
+tmux new -s robo
+python run_instance.py --instance-dir instance_0 --workers 10
+# Strg+B, D zum Detachen der tmux-Session
+\end{lstlisting}
+
+Dasselbe wiederholen f\"ur \texttt{vm1/instance\_1}, \texttt{vm2/instance\_2},
+\texttt{vm3/instance\_3} -- jede VM arbeitet unabh\"angig, ohne Wissen von den anderen.
+
+\subsection{Schritt 4 -- Fortschritt pr\"ufen (jederzeit w\"ahrend des Laufs m\"oglich)}
+
+\begin{lstlisting}[language=bash]
+scp user@vm0-ip:~/robo_neu/instance_0/results/status.json data/instances/instance_0/results/
+# ... fuer alle VMs wiederholen
+python check_progress.py --pattern "data/instances/instance_*/results/status.json"
+\end{lstlisting}
+
+\subsection{Schritt 5 -- Nach Abschluss: Ergebnisse zusammenf\"uhren}
+
+\begin{lstlisting}[language=bash]
+scp user@vm0-ip:~/robo_neu/instance_0/results/results.csv data/instances/instance_0/results/
+# ... fuer alle VMs wiederholen
+python merge_results.py --pattern "data/instances/instance_*/results/results.csv" --out data/results_gesamt.xlsx
+\end{lstlisting}
+
+\section{Wichtige Hinweise}
+
+\begin{itemize}[leftmargin=1.2em]
+  \item Bei Absturz oder SSH-Abbruch: denselben \texttt{run\_instance.py}-Befehl einfach
+        erneut ausf\"uhren -- bereits erledigte Tasks (\texttt{status=ok} in
+        \texttt{results.csv}) werden automatisch \"ubersprungen.
+  \item Fehlerhafte einzelne Tasks stoppen den Gesamtlauf nicht
+        (\texttt{status="error"} wird protokolliert, Rest l\"auft weiter).
+  \item Worker-Anzahl sollte der Anzahl vCPUs der jeweiligen VM entsprechen -- mehr
+        Worker als Kerne bringt keinen Geschwindigkeitsvorteil.
+  \item Mehr VMs als aktuell 4 sind m\"oglich, erfordern aber ggf. eine
+        Quota-Erh\"ohung beim LRZ (vCPU-/Instanz-Kontingent des
+        Compute-Cloud-Projekts).
+  \item \texttt{config.py} ist aktuell auf Testwerte reduziert -- f\"ur den echten
+        Lauf (500.000+ Kombinationen) \texttt{FUNKTIONEN}, \texttt{DIMENSIONEN},
+        \texttt{SURROGATE\_AKQUISITION\_PAARE} und \texttt{N\_SAMPLE\_INIT} wieder
+        hochskalieren.
+\end{itemize}
+
+\section{Offene Automatisierungsm\"oglichkeit (optional)}
+
+Da Schritt 2--4 pro VM identisch sind, l\"asst sich der Ablauf mit einem kleinen
+Wrapper-Skript (Bash/PowerShell) \"uber eine Liste von VM-IPs automatisieren, statt
+jede VM manuell einzeln anzusteuern -- auf Wunsch kann ein solches Skript erg\"anzt
+werden.
+
+\end{document}

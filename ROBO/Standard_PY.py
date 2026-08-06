@@ -1,11 +1,10 @@
-import torch
 import cocoex
 from botorch.models import SingleTaskGP
-from botorch.models.transforms import Normalize, Standardize
 from botorch.fit import fit_gpytorch_mll
 from botorch.acquisition.analytic import LogExpectedImprovement, UpperConfidenceBound
 from botorch.optim import optimize_acqf
 from gpytorch.mlls import ExactMarginalLogLikelihood
+import torch
 
 
 minus_area = -1000
@@ -26,18 +25,8 @@ def run_gausian_prozess(train_X, train_Y, dim, acquisition_func,
 
     Rückgabe: next_x (torch.double, shape [dim]), acq_value (torch.double, Skalar)
     """
-    # Suchraum-Grenzen (werden auch für die Input-Normalisierung gebraucht)
-    bounds = torch.tensor(
-        [[lower_bound] * dim, [upper_bound] * dim], dtype=torch.double
-    )
-
-    # 1) Modell fitten (Inputs auf [0,1]^d normalisiert, Outputs standardisiert,
-    #    da der Suchraum bzw. die Funktionswerte sonst zu groß für ein stabiles Fitting sind)
-    model = SingleTaskGP(
-        train_X, train_Y,
-        input_transform=Normalize(d=dim, bounds=bounds),
-        outcome_transform=Standardize(m=1),
-    )
+    # 1) Modell fitten
+    model = SingleTaskGP(train_X, train_Y)
     mll = ExactMarginalLogLikelihood(model.likelihood, model)
     fit_gpytorch_mll(mll)
 
@@ -52,6 +41,9 @@ def run_gausian_prozess(train_X, train_Y, dim, acquisition_func,
         raise ValueError(f"Unbekannte Akquisitionsfunktion für GausianProzess: {acquisition_func}")
 
     # 3) nächsten Punkt vorschlagen
+    bounds = torch.tensor(
+        [[lower_bound] * dim, [upper_bound] * dim], dtype=torch.double
+    )
     next_x, acq_value = optimize_acqf(
         acqf,
         bounds=bounds,

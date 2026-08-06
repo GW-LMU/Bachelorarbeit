@@ -1,16 +1,5 @@
 import numpy as np
-import torch
-from Standard_PY import run_gausian_prozess
 import cocoex
-from botorch.models import SingleTaskGP
-from botorch.fit import fit_gpytorch_mll
-from botorch.acquisition.analytic import LogExpectedImprovement
-from botorch.optim import optimize_acqf
-from gpytorch.mlls import ExactMarginalLogLikelihood
-import torch
-
-minus_area = -1000
-plus_area = 1000
 
 
 def evaluate_bbob_function(x, funktion, dimension, instance=1, suite=None, maximize=False):
@@ -82,7 +71,7 @@ def get_bbob_optimum(funktion, dimension, instance=1, suite=None, maximize=False
 
     f_opt = -f_min if maximize else f_min
 
-    
+    print(f"Funktion {funktion}, Dimension {dimension}: Optimum bei x_opt={x_opt}, f_opt={f_opt:.6f}")
 
     return x_opt, f_opt
 
@@ -161,8 +150,8 @@ def waehle_und_berechne_variante(surrogate_model, acquisition_func, train_X, tra
     )
 
     if surrogate_model == "GausianProzess":
-        return run_gausian_prozess(train_X, train_Y, dim, acquisition_func,
-                                    lower_bound=lower_bound, upper_bound=upper_bound)
+        model = _gp_fitten(train_X, train_Y)
+        acqf = _gp_acquisition_waehlen(acquisition_func, model, train_Y)
 
     elif surrogate_model == "Imprecise_GausianProzess_Rodemann":
         raise NotImplementedError(

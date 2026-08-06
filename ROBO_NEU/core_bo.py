@@ -1,0 +1,217 @@
+"""BO-Kernfunktionen fuer die verteilte Pipeline.
+
+Eigenstaendige Kopie/Anpassung der Logik aus ROBO/coco_benchmark.py und
+ROBO/Standard_PY.py (dort nicht veraendert), damit ROBO_NEU ohne Abhaengigkeit
+zum alten Ordner auf jede LRZ-Instanz kopiert werden kann. Die weiteren
+robusten Varianten (Imprecise GP, Relevance Pursuit, STABLEOPT, DRBO) sind
+analog angepasste Kopien aus ROBO/, AIRBO ist eine schlanke Neuimplementierung
+nach Yang et al. 2023 (ROBO/AIRBO.py selbst war leer, siehe airbo.py fuer
+Details/Annahmen). Alle fuenf werden unten in select_and_run_variant()
+angebunden.
+"""
+
+import json
+
+import numpy as np
+import torch
+
+from botorch.models import SingleTaskGP
+from botorch.fit import fit_gpytorch_mll
+from botorch.acquisition.analytic import LogExpectedImprovement, UpperConfidenceBound
+from botorch.optim import optimize_acqf
+from botorch.models.transforms.input import Normalize
+from botorch.models.transforms.outcome import Standardize
+from gpytorch.mlls import ExactMarginalLogLikelihood
+
+# Hinweis: die Varianten-Module (imprecise_gp/relevance_pursuit/stable_opt/drbo)
+# werden bewusst NICHT hier oben importiert, sondern erst lazy innerhalb der
+# jeweiligen Verzweigung in select_and_run_variant(). Grund: relevance_pursuit.py
+# braucht botorch.models.relevance_pursuit_model, das erst ab einer neueren
+# botorch-Version existiert. Ein Top-Level-Import wuerde bei aelterem botorch
+# den kompletten core_bo-Import zum Absturz bringen - auch fuer Varianten wie
+# "GausianProzess", die davon gar nicht betroffen sind.
+
+
+def evaluate_bbob_function(x, funktion, dimension, suite, instance=1):
+    """Roher (nicht negierter) BBOB-Funktionswert - hier wird bewusst
+    MAXIMIERT, nicht die uebliche BBOB-Minimierungskonvention verwendet."""
+    problem = suite.get_problem_by_function_dimension_instance(
+        function=funktion, dimension=dimension, instance=instance
+    )
+    x_numpy = np.asarray(x, dtype=float).reshape(-1)
+    y_val = problem(x_numpy)
+    return float(y_val)
+
+
+def estimate_bbob_maximum(funktion, dimension, suite, lower_bound, upper_bound,
+                           n_samples, seed, instance=1):
+    """Schaetzt das Maximum von f(x) im Suchraum per Zufallsstichprobe.
+
+    cocoex liefert nur das bekannte MINIMUM eines BBOB-Problems
+    (problem._best_parameter). Da hier bewusst maximiert wird, gibt es
+    keinen analytischen Referenzwert - stattdessen wird eine grosse
+    Zufallsstichprobe ausgewertet und der beste gefundene Punkt als
+    Naeherung fuer das wahre Maximum verwendet. Wird EINMAL pro
+    (Funktion, Dimension)-Paar zentral in prepare_tasks.py aufgerufen,
+    nicht pro Task, um die Kosten bei sehr vielen Kombinationen gering
+    zu halten.
+    """
+    problem = suite.get_problem_by_function_dimension_instance(
+        function=funktion, dimension=dimension, instance=instance
+    )
+    rng = np.random.default_rng(seed)
+    candidates = rng.uniform(lower_bound, upper_bound, size=(n_samples, dimension))
+    values = np.array([problem(x) for x in candidates])
+    best_idx = int(np.argmax(values))
+    return candidates[best_idx], float(values[best_idx])
+
+
+def compute_regret(X_history, Y_history, x_opt, f_opt):
+    y_values = np.asarray(Y_history, dtype=float)
+    x_opt = np.asarray(x_opt, dtype=float)
+
+    x_distances = np.array([
+        np.linalg.norm(np.asarray(x, dtype=float).reshape(-1) - x_opt) for x in X_history
+    ])
+
+    best_so_far = np.maximum.accumulate(y_values)
+    simple_regret = f_opt - best_so_far
+    immediate_regret = f_opt - y_values
+
+    return best_so_far, simple_regret, immediate_regret, x_distances
+
+
+def run_gaussian_process(train_X, train_Y, dim, acquisition_func, lower_bound, upper_bound):
+    # Input auf [0,1] normalisieren + Output standardisieren: bei einem
+    # Suchraum wie [-1000, 1000] ist der GP-Fit auf Rohwerten numerisch
+    # instabil und schlaegt haeufig fehl ("not contained to the unit cube").
+    # BoTorch macht das De-/Normalisieren intern transparent, d.h. next_x
+    # kommt weiterhin in den originalen Bounds zurueck.
+    gp_bounds = torch.tensor([[lower_bound] * dim, [upper_bound] * dim], dtype=torch.double)
+    model = SingleTaskGP(
+        train_X, train_Y,
+        input_transform=Normalize(d=dim, bounds=gp_bounds),
+        outcome_transform=Standardize(m=1),
+    )
+    mll = ExactMarginalLogLikelihood(model.likelihood, model)
+    fit_gpytorch_mll(mll)
+
+    if acquisition_func == "EI":
+        acqf = LogExpectedImprovement(model, best_f=train_Y.max())
+    elif acquisition_func == "UCB":
+        acqf = UpperConfidenceBound(model, beta=2.0, maximize=True)
+    elif acquisition_func == "LCB":
+        acqf = UpperConfidenceBound(model, beta=2.0, maximize=False)
+    else:
+        raise ValueError(f"Unbekannte Akquisitionsfunktion fuer GausianProzess: {acquisition_func}")
+
+    bounds = torch.tensor([[lower_bound] * dim, [upper_bound] * dim], dtype=torch.double)
+    next_x, acq_value = optimize_acqf(
+        acqf, bounds=bounds, q=1, num_restarts=10, raw_samples=512,
+    )
+    return next_x.squeeze(0), acq_value
+
+
+def select_and_run_variant(surrogate_model, acquisition_func, train_X, train_Y, dim,
+                            lower_bound, upper_bound):
+    """Analog zu waehle_und_berechne_variante() in ROBO/coco_benchmark.py.
+
+    Alle Varianten haben dieselbe Signatur (train_X, train_Y, dim, acquisition_func,
+    lower_bound, upper_bound) und geben (next_x, acq_value) zurueck, siehe die
+    jeweiligen run_*()-Funktionen in imprecise_gp.py / relevance_pursuit.py /
+    stable_opt.py / drbo.py / airbo.py fuer Details und modellspezifische
+    Einschraenkungen (Imprecise GP: nur dim=1; STABLEOPT: nur
+    acquisition_func="UCB"; DRBO: nur acquisition_func="distributionally
+    robust UCB-Akquisition", nutzt die letzte Spalte von dim als
+    Kontextvariable; AIRBO: nur acquisition_func="UCB", nimmt eine simulierte
+    Gauss-Eingabeunsicherheit um jeden Punkt an, siehe airbo.py).
+    """
+    if surrogate_model == "GausianProzess":
+        return run_gaussian_process(train_X, train_Y, dim, acquisition_func, lower_bound, upper_bound)
+    elif surrogate_model == "Imprecise_GausianProzess_Rodemann":
+        from imprecise_gp import run_imprecise_gausian_prozess
+        return run_imprecise_gausian_prozess(train_X, train_Y, dim, acquisition_func, lower_bound, upper_bound)
+    elif surrogate_model == "AIRBO":
+        from airbo import run_airbo
+        return run_airbo(train_X, train_Y, dim, acquisition_func, lower_bound, upper_bound)
+    elif surrogate_model == "STABLEOPT":
+        from stable_opt import run_stable_opt
+        return run_stable_opt(train_X, train_Y, dim, acquisition_func, lower_bound, upper_bound)
+    elif surrogate_model == "DRBO":
+        from drbo import run_drbo
+        return run_drbo(train_X, train_Y, dim, acquisition_func, lower_bound, upper_bound)
+    elif surrogate_model == "Relevance Pursuit":
+        # eigener Import-Block, siehe Hinweis oben: schlaegt mit aelterem botorch
+        # gezielt erst HIER fehl, statt schon beim Modul-Import von core_bo.py
+        try:
+            from relevance_pursuit import run_relevance_pursuit
+        except ImportError as e:
+            raise ImportError(
+                "Variante 'Relevance Pursuit' braucht botorch.models.relevance_pursuit_model "
+                "(RobustRelevancePursuitSingleTaskGP) - das gibt es erst ab einer neueren "
+                "botorch-Version als der hier installierten. Bitte botorch aktualisieren."
+            ) from e
+        return run_relevance_pursuit(train_X, train_Y, dim, acquisition_func, lower_bound, upper_bound)
+    else:
+        raise ValueError(f"Unbekanntes Surrogatmodell: {surrogate_model}")
+
+
+def run_task(task, suite, tensor_noise, bounds):
+    """Fuehrt EINE Task komplett aus: ein (Kombination, Tensorblock)-Paar.
+
+    Gibt eine Liste von Zeilen zurueck, eine pro BO-Iteration (Long-Format),
+    analog zu den Var_n-Spalten in df_gesamt_iteration im alten Skript.
+    """
+    funktion = int(task["funktion"])
+    dimension = int(task["dimension"])
+    surrogate_model = task["surrogate_model"]
+    acquisition_model = task["acquisition_model"]
+    sample_size_initial = int(task["sample_size_initial"])
+    max_iteration = int(task["max_iteration"])
+    tensor_block = int(task["tensor_block"])
+
+    lower_bound, upper_bound = bounds
+
+    # bereits in prepare_tasks.py einmalig pro (Funktion, Dimension) geschaetzt
+    f_opt = float(task["f_opt_approx"])
+    x_opt = np.asarray(json.loads(task["x_opt_approx"]), dtype=float)
+
+    block = tensor_noise[tensor_block]
+    train_X_np = block[:sample_size_initial, :dimension]
+    train_Y_np = np.array([
+        evaluate_bbob_function(x, funktion, dimension, suite) for x in train_X_np
+    ])
+
+    train_X = torch.as_tensor(train_X_np, dtype=torch.double)
+    train_Y = torch.as_tensor(train_Y_np, dtype=torch.double).unsqueeze(-1)
+
+    rows = []
+    for j in range(1, max_iteration + 1):
+        next_x, _ = select_and_run_variant(
+            surrogate_model, acquisition_model, train_X, train_Y, dimension,
+            lower_bound, upper_bound,
+        )
+        next_x_np = next_x.numpy()
+        next_y_np = evaluate_bbob_function(next_x_np, funktion, dimension, suite)
+
+        train_X_np = np.vstack([train_X_np, next_x_np.reshape(1, -1)])
+        train_Y_np = np.append(train_Y_np, next_y_np)
+        train_X = torch.as_tensor(train_X_np, dtype=torch.double)
+        train_Y = torch.as_tensor(train_Y_np, dtype=torch.double).unsqueeze(-1)
+
+        best_so_far, simple_regret, immediate_regret, x_distances = compute_regret(
+            train_X_np, train_Y_np, x_opt, f_opt
+        )
+
+        rows.append({
+            **task,
+            "iteration": j,
+            "best_so_far": float(best_so_far[-1]),
+            "simple_regret": float(simple_regret[-1]),
+            "immediate_regret": float(immediate_regret[-1]),
+            "x_distance": float(x_distances[-1]),
+            "status": "ok",
+            "error": "",
+        })
+
+    return rows
