@@ -21,7 +21,7 @@ Regret über die Iteration) verglichen.
 
 | Parameter | Beschreibung | Status |
 |---|---|---|
-| Surrogatmodell | welches BO-Verfahren (siehe Tabelle unten) | implementiert |
+| Surrogatmodell | welches BO-Verfahren (siehe Tabelle unten) | nicht vollständig |
 | Akquisitionsfunktion | z. B. EI, UCB, LCB (verfahrensabhängig) | implementiert |
 | Anzahl Dimensionen | Suchraumdimension der Zielfunktion | implementiert |
 | Zielfunktion | BBOB-Funktion 1–24 | implementiert |
