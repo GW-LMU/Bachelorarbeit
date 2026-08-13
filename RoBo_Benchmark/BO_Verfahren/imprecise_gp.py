@@ -4,6 +4,12 @@ Angepasste Kopie von ROBO/Imprecise_GP.py: Default-Bounds kommen jetzt aus
 config.py (statt fest [-1000, 1000]) und der BayesOptimizer wird aus der
 lokalen (gekuerzten) uncertainty_aware_bo.py importiert, damit ROBO_NEU ohne
 Abhaengigkeit zum alten ROBO/-Ordner auskommt.
+
+Mehrdimensionale Erweiterung (dim>1): urspruenglich nur dim=1 unterstuetzt
+(skalare Kernel-Distanzen). Die Erweiterung auf dim>1 stammt aus
+homo_bo_compare_af.ipynb (Zelle 19) und nutzt die vektorisierten Kernel
+matern_nd/rbf_nd aus uncertainty_aware_bo.py. Siehe run_imprecise_gausian_prozess()
+fuer die Fallunterscheidung dim==1 vs. dim>1.
 """
 
 import sys
@@ -26,11 +32,14 @@ def run_imprecise_gausian_prozess(train_X, train_Y, dim, acquisition_func,
     Fuehrt die Imprecise-Gaussian-Process-Variante (Rodemann) fuer eine Iteration aus:
     1) BayesOptimizer aus uncertainty_aware_bo.py mit den bisherigen Beobachtungen bauen
     2) passende Akquisitionsfunktion anhand von acquisition_func waehlen ("LCB", "GLCB")
-    3) naechsten Punkt ueber ein Kandidatenraster im Suchraum vorschlagen
+    3) naechsten Punkt ueber Kandidaten im Suchraum vorschlagen
 
-    Hinweis: BayesOptimizer arbeitet mit skalaren Kernel-Distanzen (np.subtract.outer)
-    und unterstuetzt daher nur den 1D-Fall (dim=1). Fuer dim>1 wird bewusst ein
-    NotImplementedError geworfen, statt mathematisch falsche Ergebnisse zu liefern.
+    Zwei Faelle je nach dim (siehe BayesOptimizer in uncertainty_aware_bo.py):
+    - dim == 1: unveraendert wie bisher - skalare Kernel-Distanzen (np.subtract.outer),
+      Kandidaten als aequidistantes 1D-Gitter (np.linspace).
+    - dim > 1: neue Erweiterung aus homo_bo_compare_af.ipynb (Zelle 19) - vektorisierter
+      Kernel ueber R^d (matern_nd/rbf_nd), Kandidaten als zufaellige Punkte in der
+      d-dimensionalen Box (np.random.uniform).
 
     train_X : torch.double, shape [n, dim]
     train_Y : torch.double, shape [n, 1] (Maximierungs-Konvention, siehe core_bo.py)
@@ -38,15 +47,16 @@ def run_imprecise_gausian_prozess(train_X, train_Y, dim, acquisition_func,
 
     Rueckgabe: next_x (torch.double, shape [dim]), acq_value (torch.double, Skalar)
     """
-    if dim != 1:
-        raise NotImplementedError(
-            "Imprecise_GausianProzess_Rodemann (BayesOptimizer) unterstuetzt aktuell nur "
-            f"dim=1, da die Kernelfunktionen (matern/rbf) auf skalaren Distanzen basieren. "
-            f"Angefragt wurde dim={dim}."
-        )
-
-    x_obs = train_X.squeeze(-1).detach().cpu().numpy()
     y_obs = train_Y.squeeze(-1).detach().cpu().numpy()
+
+    if dim == 1:
+        # --- Fall dim == 1: unveraendert wie bisher ---
+        x_obs = train_X.squeeze(-1).detach().cpu().numpy()
+        x_candidates = np.linspace(lower_bound, upper_bound, n_candidates)
+    else:
+        # --- Fall dim > 1: neue, vektorisierte Erweiterung ---
+        x_obs = train_X.detach().cpu().numpy()  # shape (n, dim)
+        x_candidates = np.random.uniform(lower_bound, upper_bound, size=(n_candidates, dim))
 
     # 1) Modell mit den bisherigen Beobachtungen aufbauen
     bo = BayesOptimizer(
@@ -56,6 +66,7 @@ def run_imprecise_gausian_prozess(train_X, train_Y, dim, acquisition_func,
         c=c,
         length_scale=length_scale,
         outputscale=outputscale,
+        dim=dim,
     )
 
     # 2) Akquisitionsfunktion abfragen und passend waehlen
@@ -63,17 +74,20 @@ def run_imprecise_gausian_prozess(train_X, train_Y, dim, acquisition_func,
         af = bo.UCB
     elif acquisition_func == "GLCB":
         af = bo.PROBO
+        # Hier mit festen tau=1.0, rho=1.0
     else:
         raise ValueError(
             f"Unbekannte Akquisitionsfunktion fuer Imprecise_GausianProzess_Rodemann: {acquisition_func}"
         )
 
-    # 3) Kandidatenraster ueber den gesamten Suchraum, bestes x auswaehlen
-    x_candidates = np.linspace(lower_bound, upper_bound, n_candidates)
+    # 3) Kandidaten auswerten, bestes x auswaehlen
     acquisition_values = np.array([af(x) for x in x_candidates])
-
     best_idx = np.argmax(acquisition_values)
-    next_x = torch.tensor([x_candidates[best_idx]], dtype=torch.double)
+
+    if dim == 1:
+        next_x = torch.tensor([x_candidates[best_idx]], dtype=torch.double)
+    else:
+        next_x = torch.tensor(x_candidates[best_idx], dtype=torch.double)
     acq_value = torch.tensor(acquisition_values[best_idx], dtype=torch.double)
 
     return next_x, acq_value

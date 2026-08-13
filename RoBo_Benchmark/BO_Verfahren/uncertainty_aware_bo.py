@@ -6,46 +6,101 @@ die Teile, die imprecise_gp.py fuer eine BO-Iteration tatsaechlich braucht
 `plot_motiv` sowie ungenutzte Akquisitionsvarianten (RAHBO, CredalAF, ...) und
 die matplotlib-Abhaengigkeit wurden bewusst entfernt, damit ROBO_NEU ohne
 Abhaengigkeit zum alten Ordner auf jede LRZ-Instanz kopiert werden kann.
+
+Mehrdimensionale Erweiterung (dim>1): Die urspruenglichen Kernel `matern`/`rbf`
+arbeiten mit `np.subtract.outer` auf skalaren x-Werten und funktionieren daher
+nur fuer dim=1. Fuer dim>1 gibt es die vektorisierten Gegenstuecke
+`matern_nd`/`rbf_nd` (uebernommen aus homo_bo_compare_af.ipynb, Zelle 19), die
+auf Punkten in R^d arbeiten. `BayesOptimizer` waehlt anhand von `dim` beim
+Erzeugen automatisch die passende Variante - siehe dortiger Kommentar.
 """
 
 import numpy as np
 
 
 def matern(x, y, length_scale=1.0, outputscale=1.0):
+    """Matern-3/2-Kernel fuer dim=1 (x, y: 1D-Arrays skalarer Punkte)."""
     dists = np.abs(np.subtract.outer(x, y))
     sqrt3_dists = np.sqrt(3) * dists / length_scale
     return outputscale * (1.0 + sqrt3_dists) * np.exp(-sqrt3_dists)
 
 
 def rbf(x, y, length_scale=1.0, outputscale=1.0):
+    """RBF-Kernel fuer dim=1 (x, y: 1D-Arrays skalarer Punkte)."""
     sqdist = np.subtract.outer(x, y) ** 2
     return outputscale * np.exp(-0.5 * sqdist / length_scale ** 2)
 
 
+def matern_nd(X, Y, length_scale=1.0, outputscale=1.0):
+    """Matern-3/2-Kernel fuer dim>1 (X, Y: Arrays von Punkten in R^d).
+
+    X: shape (n, d) oder (d,) fuer einen einzelnen Punkt
+    Y: shape (m, d) oder (d,)
+    Rueckgabe: Kernelmatrix shape (n, m), analog zu matern() fuer dim=1.
+    """
+    X = np.atleast_2d(X)
+    Y = np.atleast_2d(Y)
+    dists = np.sqrt(np.sum((X[:, None, :] - Y[None, :, :]) ** 2, axis=-1))
+    sqrt3_dists = np.sqrt(3) * dists / length_scale
+    return outputscale * (1.0 + sqrt3_dists) * np.exp(-sqrt3_dists)
+
+
+def rbf_nd(X, Y, length_scale=1.0, outputscale=1.0):
+    """RBF-Kernel fuer dim>1 (X, Y: Arrays von Punkten in R^d), analog zu rbf()."""
+    X = np.atleast_2d(X)
+    Y = np.atleast_2d(Y)
+    sqdist = np.sum((X[:, None, :] - Y[None, :, :]) ** 2, axis=-1)
+    return outputscale * np.exp(-0.5 * sqdist / length_scale ** 2)
+
+
+# Ordnet jedem 1D-Kernel sein mehrdimensionales Gegenstueck zu, damit
+# BayesOptimizer anhand von `dim` automatisch die passende Variante waehlt.
+_ND_KERNELS = {matern: matern_nd, rbf: rbf_nd}
+
+
 class BayesOptimizer:
-    """1D Imprecise-GP-Modell (Rodemann): robuste Akquisition ueber eine
-    Menge unsicherer Priori-Mittelwerte M*h statt eines einzelnen Priors.
+    """Imprecise-GP-Modell (Rodemann): robuste Akquisition ueber eine Menge
+    unsicherer Priori-Mittelwerte M*h statt eines einzelnen Priors.
+
+    Unterstuetzt dim=1 (urspruengliche, skalare Kernel-Distanzen) und dim>1
+    (vektorisierte Kernel ueber R^d, siehe matern_nd/rbf_nd oben). Alle
+    Methoden nach __init__ (worst-case-/most-likely-Prior, MLL, Posterior,
+    UCB/PROBO) sind fuer beide Faelle identisch, da sie ausschliesslich ueber
+    self.kernel (dim-abhaengig gewaehlt) auf x_obs zugreifen.
     """
 
     def __init__(self, x_obs, y_obs, y_obs_vars=None, kernel=matern, c=50.0,
-                 length_scale=1.0, outputscale=1.0):
+                 length_scale=1.0, outputscale=1.0, dim=1):
         """
-        x_obs: array der beobachteten x-Werte
+        x_obs: array der beobachteten x-Werte (dim=1: shape (n,); dim>1: shape (n, dim))
         y_obs: array der beobachteten y-Werte
         y_obs_vars: array der beobachteten y-Varianz (aleatorische Unsicherheit),
                     None im Fall homoskedastischen Rauschens
-        kernel: Kernel-Funktion (matern/rbf)
+        kernel: 1D-Kernel-Funktion (matern/rbf); fuer dim>1 wird automatisch
+                das zugehoerige Gegenstueck aus _ND_KERNELS verwendet
         c: Imprecision-Parameter
         length_scale, outputscale: Kernel-Hyperparameter
+        dim: Dimension des Suchraums
         """
-        self.x_obs = np.array(x_obs)
+        self.dim = dim
         self.y_obs = np.array(y_obs)
         self.y_obs_vars = np.array(y_obs_vars) if y_obs_vars is not None else None
-
-        self.kernel = lambda X, Y: kernel(X, Y, length_scale=length_scale, outputscale=outputscale)
         self.c = c
 
-        # C, C_inv, s_k, S_k vorab berechnen
+        if self.dim == 1:
+            # --- Fall dim == 1: unveraendert wie bisher (skalare Kernel-Distanzen) ---
+            self.x_obs = np.array(x_obs).reshape(-1)
+            self.kernel = lambda X, Y: kernel(X, Y, length_scale=length_scale, outputscale=outputscale)
+        else:
+            # --- Fall dim > 1: vektorisierter Kernel ueber R^d (Erweiterung aus
+            # homo_bo_compare_af.ipynb, Zelle 19) ---
+            if kernel not in _ND_KERNELS:
+                raise ValueError(f"Kein mehrdimensionaler Kernel fuer {kernel.__name__} hinterlegt.")
+            nd_kernel = _ND_KERNELS[kernel]
+            self.x_obs = np.atleast_2d(np.array(x_obs))
+            self.kernel = lambda X, Y: nd_kernel(X, Y, length_scale=length_scale, outputscale=outputscale)
+
+        # C, C_inv, s_k, S_k vorab berechnen (Rest identisch fuer dim=1 und dim>1)
         self.C = self.kernel(self.x_obs, self.x_obs)
         self.C_inv = self.robust_inverse(self.C, self.x_obs)
         self.s_k = self.C_inv @ np.ones(len(self.x_obs))
@@ -153,3 +208,5 @@ class BayesOptimizer:
         mean_term = -kx @ self.C_inv @ np.array(self.y_obs)
         var_term = tau * (self.k_scalar(x) - kx @ self.C_inv @ kx.T)
         return mean_term + var_term + rho * self.mu_bounds_diff(x)
+
+        # Nach Definition 11 im Paper

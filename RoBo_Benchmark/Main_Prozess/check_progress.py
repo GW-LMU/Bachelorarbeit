@@ -5,6 +5,12 @@ Kann waehrend die Instanzen noch rechnen wiederholt aufgerufen werden.
 
     python Main_Prozess/check_progress.py --pattern "data/instances/instance_*/results/status.json"
     (aus der ROBO_Benchmark-Wurzel)
+
+Mit --live zusaetzlich pro Worker-Prozess anzeigen, welche Task (Kombination +
+Tensorblock) er gerade bearbeitet und bei welcher Iteration er steht (liest
+die worker_<pid>.json-Dateien aus dem workers/-Unterordner neben status.json):
+
+    python Main_Prozess/check_progress.py --pattern "data/instances/instance_*/results/status.json" --live
 """
 
 import argparse
@@ -13,12 +19,7 @@ import json
 from pathlib import Path
 
 
-def main(pattern):
-    files = sorted(glob.glob(pattern))
-    if not files:
-        print(f"Keine status.json gefunden fuer Pattern: {pattern}")
-        return
-
+def print_status_table(files):
     total_done = total_failed = total_all = 0
     print(f"{'Instanz':<20}{'erledigt':>10}{'gesamt':>10}{'%':>8}{'Tasks/s':>10}{'ETA (min)':>12}")
     for f in files:
@@ -38,8 +39,52 @@ def main(pattern):
     print(f"GESAMT: {total_done}/{total_all} ({pct:.1f}%) | Fehlerhafte Tasks: {total_failed}")
 
 
+def print_live_table(status_files):
+    """Pro status.json-Fundstelle die Worker-Live-Dateien im Unterordner
+    workers/ einlesen und anzeigen, welche Task/Iteration gerade laeuft."""
+    rows = []
+    for status_file in status_files:
+        instance_name = Path(status_file).parents[1].name
+        workers_dir = Path(status_file).parent / "workers"
+        for wf in sorted(workers_dir.glob("worker_*.json")):
+            try:
+                with open(wf) as fh:
+                    w = json.load(fh)
+            except (json.JSONDecodeError, OSError):
+                continue  # gerade mitten im atomaren Replace erwischt - naechstes Mal wieder lesbar
+            rows.append((instance_name, w))
+
+    if not rows:
+        print("Keine laufenden Worker gefunden (workers/-Ordner leer oder noch keine Task gestartet).")
+        return
+
+    header = (f"{'Instanz':<14}{'PID':>8}{'Task':>7}{'Komb.':>7}{'Block':>7}  "
+              f"{'Surrogat':<28}{'Akqu.':<10}{'Iteration':>12}  {'Status':<8}{'Update'}")
+    print(header)
+    for instance_name, w in sorted(rows, key=lambda r: (r[0], r[1]["pid"])):
+        iter_str = f"{w['iteration']}/{w['max_iteration']}"
+        print(f"{instance_name:<14}{w['pid']:>8}{w['task_id']:>7}{w['combination_id']:>7}{w['tensor_block']:>7}  "
+              f"{w['surrogate_model']:<28}{w['acquisition_model']:<10}{iter_str:>12}  "
+              f"{w['task_status']:<8}{w['last_update']}")
+
+
+def main(pattern, live):
+    files = sorted(glob.glob(pattern))
+    if not files:
+        print(f"Keine status.json gefunden fuer Pattern: {pattern}")
+        return
+
+    print_status_table(files)
+
+    if live:
+        print()
+        print_live_table(files)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--pattern", required=True)
+    parser.add_argument("--live", action="store_true",
+                         help="zusaetzlich anzeigen, welcher Worker (PID) gerade welche Task/Iteration bearbeitet")
     args = parser.parse_args()
-    main(args.pattern)
+    main(args.pattern, args.live)

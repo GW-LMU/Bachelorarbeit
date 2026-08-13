@@ -161,11 +161,16 @@ def select_and_run_variant(surrogate_model, acquisition_func, train_X, train_Y, 
         raise ValueError(f"Unbekanntes Surrogatmodell: {surrogate_model}")
 
 
-def run_task(task, suite, tensor_noise, bounds):
+def run_task(task, suite, tensor_noise, bounds, progress_callback=None):
     """Fuehrt EINE Task komplett aus: ein (Kombination, Tensorblock)-Paar.
 
     Gibt eine Liste von Zeilen zurueck, eine pro BO-Iteration (Long-Format),
     analog zu den Var_n-Spalten in df_gesamt_iteration im alten Skript.
+
+    progress_callback: optional, wird nach jeder abgeschlossenen Iteration mit
+    der aktuellen Iterationsnummer j aufgerufen (fuer Live-Fortschrittsanzeige,
+    siehe run_instance.py). Standardmaessig None (kein Overhead, z.B. wenn
+    run_task ausserhalb der Pipeline direkt aufgerufen wird).
     """
     funktion = int(task["funktion"])
     dimension = int(task["dimension"])
@@ -192,6 +197,7 @@ def run_task(task, suite, tensor_noise, bounds):
 
     rows = []
     for j in range(1, max_iteration + 1):
+        #Hier wird das nächste x vorhergesagt, bassiern dauf den 
         next_x, _ = select_and_run_variant(
             surrogate_model, acquisition_model, train_X, train_Y, dimension,
             lower_bound, upper_bound,
@@ -218,5 +224,8 @@ def run_task(task, suite, tensor_noise, bounds):
             "status": "ok",
             "error": "",
         })
+
+        if progress_callback is not None:
+            progress_callback(j)
 
     return rows

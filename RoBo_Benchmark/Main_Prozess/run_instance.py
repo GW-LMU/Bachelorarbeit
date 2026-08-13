@@ -48,7 +48,7 @@ RESULT_COLUMNS = [
 _WORKER_STATE = {}
 
 
-def _init_worker(tensor_path, bounds):
+def _init_worker(tensor_path, bounds, workers_dir):
     # Eigenes Arbeitsverzeichnis pro Prozess: cocoex schreibt bei der
     # Optimum-Abfrage eine Datei mit festem Namen ins cwd - ohne eigenes
     # cwd wuerden sich parallele Worker gegenseitig ueberschreiben.
@@ -58,15 +58,54 @@ def _init_worker(tensor_path, bounds):
     _WORKER_STATE["suite"] = cocoex.Suite("bbob", "", "")
     _WORKER_STATE["tensor_noise"] = np.load(tensor_path)
     _WORKER_STATE["bounds"] = bounds
+    # eigene Live-Statusdatei je Worker-Prozess, ueber den PID eindeutig,
+    # damit sich parallele Worker beim Schreiben nicht in die Quere kommen
+    _WORKER_STATE["worker_status_path"] = Path(workers_dir) / f"worker_{os.getpid()}.json"
+
+
+def _write_worker_status(task_row, iteration, task_status):
+    """Schreibt den Live-Fortschritt dieses Worker-Prozesses atomar (tmp + replace,
+    analog write_status()), damit check_progress.py nie eine halb geschriebene
+    Datei liest."""
+    path = _WORKER_STATE.get("worker_status_path")
+    if path is None:
+        return
+    status = {
+        "pid": os.getpid(),
+        "task_id": int(task_row["task_id"]),
+        "combination_id": int(task_row["combination_id"]),
+        "tensor_block": int(task_row["tensor_block"]),
+        "funktion": int(task_row["funktion"]),
+        "dimension": int(task_row["dimension"]),
+        "surrogate_model": task_row["surrogate_model"],
+        "acquisition_model": task_row["acquisition_model"],
+        "iteration": iteration,
+        "max_iteration": int(task_row["max_iteration"]),
+        "task_status": task_status,  # "laeuft" | "fertig" | "fehler"
+        "last_update": time.strftime("%Y-%m-%d %H:%M:%S"),
+    }
+    tmp_path = path.with_suffix(".tmp")
+    with open(tmp_path, "w") as f:
+        json.dump(status, f, indent=2)
+    tmp_path.replace(path)
 
 
 def _run_one_task(task_row):
     suite = _WORKER_STATE["suite"]
     tensor_noise = _WORKER_STATE["tensor_noise"]
     bounds = _WORKER_STATE["bounds"]
+
+    _write_worker_status(task_row, iteration=0, task_status="laeuft")
+
+    def progress_callback(iteration):
+        _write_worker_status(task_row, iteration, task_status="laeuft")
+
     try:
-        return core_bo.run_task(task_row, suite, tensor_noise, bounds)
+        rows = core_bo.run_task(task_row, suite, tensor_noise, bounds, progress_callback=progress_callback)
+        _write_worker_status(task_row, iteration=int(task_row["max_iteration"]), task_status="fertig")
+        return rows
     except Exception as exc:  # ein fehlerhafter Task darf den Lauf nicht stoppen
+        _write_worker_status(task_row, iteration=-1, task_status="fehler")
         return [{
             **task_row,
             "iteration": -1,
@@ -117,6 +156,13 @@ def main(instance_dir, workers, output_dir):
     output_dir.mkdir(parents=True, exist_ok=True)
     results_path = output_dir / "results.csv"
     status_path = output_dir / "status.json"
+    # Live-Fortschritt je Worker-Prozess (welcher Task, welche Iteration) -
+    # eigener Unterordner, damit check_progress.py ihn separat vom
+    # aggregierten status.json einlesen kann
+    workers_dir = output_dir / "workers"
+    workers_dir.mkdir(parents=True, exist_ok=True)
+    for stale in workers_dir.glob("worker_*.json"):
+        stale.unlink()  # Leichen von einem frueheren Lauf (andere PIDs) entfernen
 
     df_tasks = pd.read_csv(tasks_path)
     done_ids = load_done_task_ids(results_path)
@@ -147,7 +193,7 @@ def main(instance_dir, workers, output_dir):
     with ProcessPoolExecutor(
         max_workers=workers,
         initializer=_init_worker,
-        initargs=(tensor_path, bounds),
+        initargs=(tensor_path, bounds, workers_dir.resolve()),
     ) as pool:
         futures = [pool.submit(_run_one_task, t) for t in task_dicts]
 
