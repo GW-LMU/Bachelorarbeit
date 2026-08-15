@@ -38,35 +38,40 @@ from gpytorch.mlls import ExactMarginalLogLikelihood
 
 
 def evaluate_bbob_function(x, funktion, dimension, suite, instance=1):
-    """Roher (nicht negierter) BBOB-Funktionswert - hier wird bewusst
-    MAXIMIERT, nicht die uebliche BBOB-Minimierungskonvention verwendet."""
+    """Negierter BBOB-Funktionswert: -f(x). BBOB-Probleme sind als
+    Minimierung von f(x) definiert, mit dem bekannten (analytischen)
+    Optimum im Inneren des Suchraums. Da hier durchgaengig MAXIMIERT wird
+    (BoTorch-Konvention), wird die Standard-BBOB-Konvention hergestellt,
+    indem -f(x) statt des rohen f(x) zurueckgegeben wird - das Maximum von
+    -f(x) entspricht dann exakt dem Minimum von f(x)."""
     problem = suite.get_problem_by_function_dimension_instance(
         function=funktion, dimension=dimension, instance=instance
     )
     x_numpy = np.asarray(x, dtype=float).reshape(-1)
     y_val = problem(x_numpy)
-    return float(y_val)
+    return -float(y_val)
 
 
 def estimate_bbob_maximum(funktion, dimension, suite, lower_bound, upper_bound,
                            n_samples, seed, instance=1):
-    """Schaetzt das Maximum von f(x) im Suchraum per Zufallsstichprobe.
+    """Schaetzt das Maximum von -f(x) im Suchraum per Zufallsstichprobe.
 
-    cocoex liefert nur das bekannte MINIMUM eines BBOB-Problems
-    (problem._best_parameter). Da hier bewusst maximiert wird, gibt es
-    keinen analytischen Referenzwert - stattdessen wird eine grosse
-    Zufallsstichprobe ausgewertet und der beste gefundene Punkt als
-    Naeherung fuer das wahre Maximum verwendet. Wird EINMAL pro
-    (Funktion, Dimension)-Paar zentral in prepare_tasks.py aufgerufen,
-    nicht pro Task, um die Kosten bei sehr vielen Kombinationen gering
-    zu halten.
+    Muss dieselbe Vorzeichenkonvention wie evaluate_bbob_function()
+    verwenden (-f(x)), sonst waeren f_opt_approx und die waehrend des BO-Laufs
+    beobachteten Werte nicht vergleichbar. Eine Zufallsstichprobe wird
+    trotzdem verwendet statt des von cocoex bekannten analytischen Minimums,
+    weil dieses nur der beste Wert INNERHALB der von cocoex definierten
+    Problemgrenzen ist, waehrend hier explizit auf der eigenen Box
+    [lower_bound, upper_bound]^dimension gesucht wird. Wird EINMAL pro
+    (Funktion, Dimension)-Paar zentral in prepare_tasks.py aufgerufen, nicht
+    pro Task, um die Kosten bei sehr vielen Kombinationen gering zu halten.
     """
     problem = suite.get_problem_by_function_dimension_instance(
         function=funktion, dimension=dimension, instance=instance
     )
     rng = np.random.default_rng(seed)
     candidates = rng.uniform(lower_bound, upper_bound, size=(n_samples, dimension))
-    values = np.array([problem(x) for x in candidates])
+    values = np.array([-problem(x) for x in candidates])
     best_idx = int(np.argmax(values))
     return candidates[best_idx], float(values[best_idx])
 
@@ -152,9 +157,12 @@ def select_and_run_variant(surrogate_model, acquisition_func, train_X, train_Y, 
             from relevance_pursuit import run_relevance_pursuit
         except ImportError as e:
             raise ImportError(
-                "Variante 'Relevance Pursuit' braucht botorch.models.relevance_pursuit_model "
-                "(RobustRelevancePursuitSingleTaskGP) - das gibt es erst ab einer neueren "
-                "botorch-Version als der hier installierten. Bitte botorch aktualisieren."
+                "Variante 'Relevance Pursuit' braucht RobustRelevancePursuitSingleTaskGP "
+                "(botorch.models.robust_relevance_pursuit_model bzw. bei aelteren Versionen "
+                "botorch.models.relevance_pursuit_model) - das gibt es erst ab botorch >= 0.11, "
+                "was wiederum Python >= 3.10 voraussetzt. Mit der hier installierten botorch-/"
+                "Python-Version nicht verfuegbar - siehe RoBo_Benchmark/.venv311 (Python 3.11 + "
+                "aktuelles botorch) fuer eine Umgebung, in der diese Variante laeuft."
             ) from e
         return run_relevance_pursuit(train_X, train_Y, dim, acquisition_func, lower_bound, upper_bound)
     else:

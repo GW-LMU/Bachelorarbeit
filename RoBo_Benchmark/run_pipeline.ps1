@@ -48,7 +48,11 @@ function Invoke-Step {
     Add-Content -Path $logPath -Value "`n=== [$timestamp] $Description ==="
     Add-Content -Path $logPath -Value "> $python $($ScriptArgs -join ' ')"
 
-    & $python @ScriptArgs 2>&1 | Tee-Object -FilePath $logPath -Append
+    # Kein "2>&1" hier: bei nativen Programmen wie python.exe wickelt PowerShell 5.1
+    # jede stderr-Zeile in einen ErrorRecord (NativeCommandError) und setzt $LASTEXITCODE/$?
+    # faelschlich auf Fehler, auch wenn der Prozess mit Exit-Code 0 durchlaeuft. stdout wird
+    # weiterhin geloggt, stderr laeuft unveraendert auf die Konsole durch.
+    & $python @ScriptArgs | Tee-Object -FilePath $logPath -Append
 
     if ($LASTEXITCODE -ne 0) {
         Write-Host "FEHLER in Schritt '$Description' (Exit-Code $LASTEXITCODE). Abbruch." -ForegroundColor Red

@@ -66,28 +66,41 @@ def _init_worker(tensor_path, bounds, workers_dir):
 def _write_worker_status(task_row, iteration, task_status):
     """Schreibt den Live-Fortschritt dieses Worker-Prozesses atomar (tmp + replace,
     analog write_status()), damit check_progress.py nie eine halb geschriebene
-    Datei liest."""
+    Datei liest.
+
+    Rein informativ (nur fuer check_progress.py) - ein Fehler hier (z.B.
+    WinError 5 "Zugriff verweigert" durch Virenscanner/Indexer, der die Datei
+    kurz offen haelt) darf NIE einen sonst erfolgreichen Task als "error"
+    erscheinen lassen und damit bereits berechnete Ergebniszeilen verwerfen -
+    siehe _run_one_task(), wo das Ergebnis von run_task() sonst mit im selben
+    try-Block gestanden haette.
+    """
     path = _WORKER_STATE.get("worker_status_path")
     if path is None:
         return
-    status = {
-        "pid": os.getpid(),
-        "task_id": int(task_row["task_id"]),
-        "combination_id": int(task_row["combination_id"]),
-        "tensor_block": int(task_row["tensor_block"]),
-        "funktion": int(task_row["funktion"]),
-        "dimension": int(task_row["dimension"]),
-        "surrogate_model": task_row["surrogate_model"],
-        "acquisition_model": task_row["acquisition_model"],
-        "iteration": iteration,
-        "max_iteration": int(task_row["max_iteration"]),
-        "task_status": task_status,  # "laeuft" | "fertig" | "fehler"
-        "last_update": time.strftime("%Y-%m-%d %H:%M:%S"),
-    }
-    tmp_path = path.with_suffix(".tmp")
-    with open(tmp_path, "w") as f:
-        json.dump(status, f, indent=2)
-    tmp_path.replace(path)
+    try:
+        status = {
+            "pid": os.getpid(),
+            "task_id": int(task_row["task_id"]),
+            "combination_id": int(task_row["combination_id"]),
+            "tensor_block": int(task_row["tensor_block"]),
+            "funktion": int(task_row["funktion"]),
+            "dimension": int(task_row["dimension"]),
+            "surrogate_model": task_row["surrogate_model"],
+            "acquisition_model": task_row["acquisition_model"],
+            "iteration": iteration,
+            "max_iteration": int(task_row["max_iteration"]),
+            "task_status": task_status,  # "laeuft" | "fertig" | "fehler"
+            "last_update": time.strftime("%Y-%m-%d %H:%M:%S"),
+        }
+        tmp_path = path.with_suffix(".tmp")
+        with open(tmp_path, "w") as f:
+            json.dump(status, f, indent=2)
+        tmp_path.replace(path)
+    except OSError as exc:
+        # nur eine Konsolenmeldung - der eigentliche Task-Erfolg/-Ergebnis
+        # haengt nicht von diesem Live-Statusfile ab
+        print(f"[warnung] worker status write fehlgeschlagen (ignoriert): {exc}")
 
 
 def _run_one_task(task_row):
@@ -119,7 +132,10 @@ def _run_one_task(task_row):
 
 
 def load_done_task_ids(results_path):
-    if not results_path.exists():
+    if not results_path.exists() or results_path.stat().st_size == 0:
+        # leere Datei kann von einem abgebrochenen vorherigen Lauf uebrig
+        # geblieben sein (z.B. Prozess vor dem Schreiben des Headers
+        # abgestuerzt) - dann ist "keine Ergebnisse" die richtige Annahme.
         return set()
     df = pd.read_csv(results_path, usecols=["task_id", "status"])
     return set(df.loc[df["status"] == "ok", "task_id"].unique())

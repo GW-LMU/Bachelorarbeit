@@ -198,14 +198,23 @@ class BayesOptimizer:
         return -0.5 * y_centered.T @ self.C_inv @ y_centered
 
     def UCB(self, x, tau=1.0):
-        """(Un-)Lower-Confidence-Bound am worst-/most-likely-Prior (=Standardposterior, M=0)."""
+        """Upper-Confidence-Bound am worst-/most-likely-Prior (=Standardposterior, M=0).
+
+        Vorzeichen an die Maximierungs-Konvention der Pipeline angepasst (siehe
+        core_bo.py/evaluate_bbob_function): +mu statt -mu, sonst sucht die
+        Akquisition faktisch das Minimum von y_obs statt des Maximums.
+        """
         mu, sigma = self.predict_posterior(x)
-        return -mu + tau * sigma
+        return mu + tau * sigma
 
     def PROBO(self, x, tau=1.0, rho=1.0):
-        """GLCB nach Rodemann: Standard-UCB-Term + rho * Breite des Credal-Sets."""
+        """GLCB nach Rodemann: Standard-UCB-Term + rho * Breite des Credal-Sets.
+
+        Vorzeichen von mean_term analog zu UCB() an die Maximierungs-Konvention
+        angepasst (+mu statt -mu).
+        """
         kx = self.k_vec(x)
-        mean_term = -kx @ self.C_inv @ np.array(self.y_obs)
+        mean_term = kx @ self.C_inv @ np.array(self.y_obs)
         var_term = tau * (self.k_scalar(x) - kx @ self.C_inv @ kx.T)
         return mean_term + var_term + rho * self.mu_bounds_diff(x)
 

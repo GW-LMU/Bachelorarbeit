@@ -10,7 +10,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import pfade  # noqa: F401 - fuegt Pre_Processing/ (config) zu sys.path hinzu
 
 import torch
-from botorch.models.relevance_pursuit_model import RobustRelevancePursuitSingleTaskGP
+try:
+    # aktueller Modulpfad (botorch >= ~0.13)
+    from botorch.models.robust_relevance_pursuit_model import RobustRelevancePursuitSingleTaskGP
+except ImportError:
+    # aelterer Modulpfad (botorch ~0.11-0.12), zur Sicherheit als Fallback
+    from botorch.models.relevance_pursuit_model import RobustRelevancePursuitSingleTaskGP
 from botorch.models.transforms import Normalize, Standardize
 from botorch.fit import fit_gpytorch_mll
 from botorch.acquisition.analytic import LogExpectedImprovement, UpperConfidenceBound
