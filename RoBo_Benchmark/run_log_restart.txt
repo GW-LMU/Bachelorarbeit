@@ -1,0 +1,729 @@
+Tasks gesamt: 600 | bereits erledigt: 0 | offen: 600
+instance instance_0:   0%|          | 0/600 [00:00<?, ?it/s]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:   0%|          | 1/600 [00:50<8:25:55, 50.68s/it]instance instance_0:   0%|          | 2/600 [00:50<3:29:44, 21.04s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:   0%|          | 3/600 [00:51<1:58:19, 11.89s/it]instance instance_0:   1%|          | 4/600 [00:52<1:14:18,  7.48s/it]instance instance_0:   1%|          | 5/600 [00:57<1:03:24,  6.39s/it]instance instance_0:   1%|1         | 6/600 [00:58<46:12,  4.67s/it]  instance instance_0:   1%|1         | 7/600 [01:30<2:15:08, 13.67s/it]instance instance_0:   1%|1         | 8/600 [01:32<1:37:09,  9.85s/it]instance instance_0:   2%|1         | 9/600 [01:32<1:07:28,  6.85s/it]instance instance_0:   2%|1         | 10/600 [01:33<49:54,  5.08s/it] instance instance_0:   2%|1         | 11/600 [01:38<50:09,  5.11s/it]instance instance_0:   2%|2         | 12/600 [01:42<44:09,  4.51s/it]instance instance_0:   2%|2         | 13/600 [02:09<1:52:11, 11.47s/it]instance instance_0:   2%|2         | 14/600 [02:13<1:29:43,  9.19s/it]instance instance_0:   2%|2         | 15/600 [02:14<1:06:27,  6.82s/it]instance instance_0:   3%|2         | 16/600 [02:15<47:44,  4.91s/it]  instance instance_0:   3%|2         | 17/600 [02:21<51:06,  5.26s/it]instance instance_0:   3%|3         | 18/600 [02:26<51:07,  5.27s/it]instance instance_0:   3%|3         | 19/600 [02:45<1:30:43,  9.37s/it]instance instance_0:   3%|3         | 20/600 [02:47<1:09:02,  7.14s/it]instance instance_0:   4%|3         | 21/600 [02:53<1:04:17,  6.66s/it]instance instance_0:   4%|3         | 22/600 [02:53<45:47,  4.75s/it]  instance instance_0:   4%|3         | 23/600 [02:57<43:14,  4.50s/it]instance instance_0:   4%|4         | 24/600 [03:00<40:04,  4.17s/it]instance instance_0:   4%|4         | 25/600 [03:13<1:06:18,  6.92s/it]instance instance_0:   4%|4         | 26/600 [03:15<51:42,  5.41s/it]  instance instance_0:   4%|4         | 27/600 [03:20<50:48,  5.32s/it]instance instance_0:   5%|4         | 28/600 [03:21<36:25,  3.82s/it]instance instance_0:   5%|4         | 29/600 [03:25<38:01,  4.00s/it]instance instance_0:   5%|5         | 30/600 [03:29<37:04,  3.90s/it]instance instance_0:   5%|5         | 31/600 [03:42<1:03:34,  6.70s/it]instance instance_0:   5%|5         | 32/600 [03:44<50:19,  5.32s/it]  instance instance_0:   6%|5         | 33/600 [03:49<49:21,  5.22s/it]instance instance_0:   6%|5         | 34/600 [03:49<35:20,  3.75s/it]instance instance_0:   6%|5         | 35/600 [03:53<35:46,  3.80s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\relevance_pursuit.py:155: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:823.)
+  dense_parameter = torch.tensor(dense_parameter, dtype=dtype, device=device)
+instance instance_0:   6%|6         | 36/600 [03:58<39:00,  4.15s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\relevance_pursuit.py:155: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:823.)
+  dense_parameter = torch.tensor(dense_parameter, dtype=dtype, device=device)
+instance instance_0:   6%|6         | 37/600 [04:18<1:22:37,  8.81s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\relevance_pursuit.py:155: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:823.)
+  dense_parameter = torch.tensor(dense_parameter, dtype=dtype, device=device)
+instance instance_0:   6%|6         | 38/600 [04:21<1:06:49,  7.13s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\relevance_pursuit.py:155: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:823.)
+  dense_parameter = torch.tensor(dense_parameter, dtype=dtype, device=device)
+instance instance_0:   6%|6         | 39/600 [04:28<1:05:51,  7.04s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\relevance_pursuit.py:155: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:823.)
+  dense_parameter = torch.tensor(dense_parameter, dtype=dtype, device=device)
+instance instance_0:   7%|6         | 40/600 [04:29<49:22,  5.29s/it]  C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\relevance_pursuit.py:155: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:823.)
+  dense_parameter = torch.tensor(dense_parameter, dtype=dtype, device=device)
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\optim\optimize.py:844: RuntimeWarning: Optimization failed in `gen_candidates_scipy` with the following warning(s):
+[OptimizationWarning('Optimization failed within `scipy.optimize.minimize` with status 2 and message ABNORMAL: .')]
+Trying again with a new set of initial conditions.
+  return _optimize_acqf_batch(opt_inputs=opt_inputs)
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:   7%|6         | 41/600 [14:15<27:50:18, 179.28s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:   7%|7         | 42/600 [14:42<20:43:28, 133.71s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:   7%|7         | 43/600 [15:19<16:11:32, 104.65s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:   7%|7         | 44/600 [16:23<14:18:23, 92.63s/it] C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:   8%|7         | 45/600 [18:02<14:34:34, 94.55s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\fit.py:241: OptimizationWarning: `scipy_minimize` terminated with status OptimizationStatus.FAILURE, displaying original message from `scipy.optimize.minimize`: ABNORMAL: 
+  result = optimizer(mll, closure=closure, **optimizer_kwargs)
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:   8%|7         | 46/600 [19:27<14:05:36, 91.58s/it]instance instance_0:   8%|7         | 47/600 [22:45<18:57:10, 123.38s/it]instance instance_0:   8%|8         | 48/600 [23:47<16:06:34, 105.06s/it]instance instance_0:   8%|8         | 49/600 [26:30<18:44:16, 122.43s/it]instance instance_0:   8%|8         | 50/600 [26:40<13:33:02, 88.70s/it] instance instance_0:   8%|8         | 51/600 [29:34<17:26:55, 114.42s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\optim\optimize.py:844: RuntimeWarning: Optimization failed in `gen_candidates_scipy` with the following warning(s):
+[OptimizationWarning('Optimization failed within `scipy.optimize.minimize` with status 2 and message ABNORMAL: .')]
+Trying again with a new set of initial conditions.
+  return _optimize_acqf_batch(opt_inputs=opt_inputs)
+instance instance_0:   9%|8         | 52/600 [30:48<15:32:05, 102.05s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\fit.py:241: OptimizationWarning: `scipy_minimize` terminated with status OptimizationStatus.FAILURE, displaying original message from `scipy.optimize.minimize`: ABNORMAL: 
+  result = optimizer(mll, closure=closure, **optimizer_kwargs)
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\fit.py:241: OptimizationWarning: `scipy_minimize` terminated with status OptimizationStatus.FAILURE, displaying original message from `scipy.optimize.minimize`: ABNORMAL: 
+  result = optimizer(mll, closure=closure, **optimizer_kwargs)
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\fit.py:241: OptimizationWarning: `scipy_minimize` terminated with status OptimizationStatus.FAILURE, displaying original message from `scipy.optimize.minimize`: ABNORMAL: 
+  result = optimizer(mll, closure=closure, **optimizer_kwargs)
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\fit.py:241: OptimizationWarning: `scipy_minimize` terminated with status OptimizationStatus.FAILURE, displaying original message from `scipy.optimize.minimize`: ABNORMAL: 
+  result = optimizer(mll, closure=closure, **optimizer_kwargs)
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\fit.py:241: OptimizationWarning: `scipy_minimize` terminated with status OptimizationStatus.FAILURE, displaying original message from `scipy.optimize.minimize`: ABNORMAL: 
+  result = optimizer(mll, closure=closure, **optimizer_kwargs)
+instance instance_0:   9%|8         | 53/600 [33:00<16:53:11, 111.14s/it]instance instance_0:   9%|9         | 54/600 [35:50<19:32:19, 128.83s/it]instance instance_0:   9%|9         | 55/600 [37:43<18:47:52, 124.17s/it]instance instance_0:   9%|9         | 56/600 [38:30<15:15:01, 100.92s/it]instance instance_0:  10%|9         | 57/600 [38:41<11:08:40, 73.89s/it] instance instance_0:  10%|9         | 58/600 [39:08<9:00:24, 59.82s/it] instance instance_0:  10%|9         | 59/600 [39:28<7:12:10, 47.93s/it]instance instance_0:  10%|#         | 60/600 [39:40<5:34:41, 37.19s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  10%|#         | 61/600 [40:05<4:59:45, 33.37s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  10%|#         | 62/600 [40:23<4:18:30, 28.83s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  10%|#         | 63/600 [40:26<3:08:31, 21.06s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  11%|#         | 64/600 [40:37<2:42:59, 18.24s/it]instance instance_0:  11%|#         | 65/600 [41:03<3:03:04, 20.53s/it]instance instance_0:  11%|#1        | 66/600 [41:22<2:58:06, 20.01s/it]instance instance_0:  11%|#1        | 67/600 [41:26<2:13:56, 15.08s/it]instance instance_0:  11%|#1        | 68/600 [41:38<2:06:24, 14.26s/it]instance instance_0:  12%|#1        | 69/600 [42:01<2:29:00, 16.84s/it]instance instance_0:  12%|#1        | 70/600 [42:20<2:34:05, 17.44s/it]instance instance_0:  12%|#1        | 71/600 [42:21<1:52:11, 12.73s/it]instance instance_0:  12%|#2        | 72/600 [42:35<1:54:28, 13.01s/it]instance instance_0:  12%|#2        | 73/600 [42:59<2:22:30, 16.22s/it]instance instance_0:  12%|#2        | 74/600 [43:19<2:32:52, 17.44s/it]instance instance_0:  13%|#2        | 76/600 [43:28<1:39:38, 11.41s/it]instance instance_0:  13%|#2        | 77/600 [43:32<1:24:55,  9.74s/it]instance instance_0:  13%|#3        | 78/600 [43:52<1:46:24, 12.23s/it]instance instance_0:  13%|#3        | 79/600 [44:10<2:01:18, 13.97s/it]instance instance_0:  13%|#3        | 80/600 [45:03<3:34:35, 24.76s/it]instance instance_0:  14%|#3        | 81/600 [47:24<8:22:46, 58.12s/it]instance instance_0:  14%|#3        | 82/600 [47:30<6:09:49, 42.84s/it]instance instance_0:  14%|#3        | 83/600 [47:34<4:31:20, 31.49s/it]instance instance_0:  14%|#4        | 84/600 [47:46<3:41:43, 25.78s/it]instance instance_0:  14%|#4        | 85/600 [47:57<3:03:01, 21.32s/it]instance instance_0:  14%|#4        | 86/600 [48:29<3:30:25, 24.56s/it]instance instance_0:  14%|#4        | 87/600 [50:32<7:40:17, 53.83s/it]instance instance_0:  15%|#4        | 88/600 [50:39<5:39:48, 39.82s/it]instance instance_0:  15%|#4        | 89/600 [50:42<4:07:22, 29.05s/it]instance instance_0:  15%|#5        | 90/600 [50:55<3:25:53, 24.22s/it]instance instance_0:  15%|#5        | 91/600 [51:04<2:45:37, 19.52s/it]instance instance_0:  15%|#5        | 92/600 [51:31<3:03:15, 21.64s/it]instance instance_0:  16%|#5        | 93/600 [53:33<7:19:21, 52.00s/it]instance instance_0:  16%|#5        | 94/600 [53:41<5:25:09, 38.56s/it]instance instance_0:  16%|#5        | 95/600 [53:45<3:58:29, 28.34s/it]instance instance_0:  16%|#6        | 96/600 [54:05<3:37:51, 25.94s/it]instance instance_0:  16%|#6        | 97/600 [54:09<2:40:45, 19.18s/it]instance instance_0:  16%|#6        | 98/600 [54:17<2:11:40, 15.74s/it]instance instance_0:  16%|#6        | 99/600 [54:32<2:10:17, 15.60s/it]instance instance_0:  17%|#6        | 100/600 [54:41<1:54:50, 13.78s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  17%|#6        | 101/600 [54:48<1:37:28, 11.72s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  17%|#7        | 102/600 [54:56<1:27:39, 10.56s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  17%|#7        | 103/600 [55:10<1:35:08, 11.49s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  17%|#7        | 104/600 [55:16<1:21:30,  9.86s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  18%|#7        | 105/600 [55:22<1:11:29,  8.67s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  18%|#7        | 106/600 [55:32<1:15:20,  9.15s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  18%|#7        | 107/600 [55:47<1:28:41, 10.79s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  18%|#8        | 108/600 [55:54<1:19:31,  9.70s/it]instance instance_0:  18%|#8        | 109/600 [55:59<1:07:39,  8.27s/it]instance instance_0:  18%|#8        | 110/600 [56:10<1:15:31,  9.25s/it]instance instance_0:  18%|#8        | 111/600 [56:27<1:33:14, 11.44s/it]instance instance_0:  19%|#8        | 112/600 [56:28<1:09:04,  8.49s/it]instance instance_0:  19%|#8        | 113/600 [56:33<59:28,  7.33s/it]  instance instance_0:  19%|#9        | 114/600 [56:48<1:18:30,  9.69s/it]instance instance_0:  19%|#9        | 115/600 [57:04<1:32:28, 11.44s/it]instance instance_0:  19%|#9        | 116/600 [57:07<1:12:21,  8.97s/it]instance instance_0:  20%|#9        | 117/600 [57:12<1:02:18,  7.74s/it]instance instance_0:  20%|#9        | 118/600 [57:19<1:00:36,  7.54s/it]instance instance_0:  20%|#9        | 119/600 [57:27<1:02:15,  7.77s/it]instance instance_0:  20%|##        | 120/600 [57:28<46:26,  5.81s/it]  instance instance_0:  20%|##        | 121/600 [57:31<39:06,  4.90s/it]instance instance_0:  20%|##        | 122/600 [57:36<37:42,  4.73s/it]instance instance_0:  20%|##        | 123/600 [57:44<45:45,  5.76s/it]instance instance_0:  21%|##        | 124/600 [57:45<34:44,  4.38s/it]instance instance_0:  21%|##        | 125/600 [57:48<31:10,  3.94s/it]instance instance_0:  21%|##1       | 126/600 [57:52<32:33,  4.12s/it]instance instance_0:  21%|##1       | 127/600 [58:01<42:28,  5.39s/it]instance instance_0:  21%|##1       | 128/600 [58:01<30:41,  3.90s/it]instance instance_0:  22%|##1       | 129/600 [58:02<24:02,  3.06s/it]instance instance_0:  22%|##1       | 130/600 [58:05<23:58,  3.06s/it]instance instance_0:  22%|##1       | 131/600 [58:10<26:46,  3.43s/it]instance instance_0:  22%|##2       | 132/600 [58:10<20:34,  2.64s/it]instance instance_0:  22%|##2       | 133/600 [58:17<30:06,  3.87s/it]instance instance_0:  22%|##2       | 134/600 [58:17<22:00,  2.83s/it]instance instance_0:  22%|##2       | 135/600 [58:19<18:08,  2.34s/it]instance instance_0:  23%|##2       | 136/600 [58:24<24:25,  3.16s/it]instance instance_0:  23%|##2       | 137/600 [58:32<36:45,  4.76s/it]instance instance_0:  23%|##3       | 138/600 [58:34<30:36,  3.98s/it]instance instance_0:  23%|##3       | 139/600 [58:50<58:31,  7.62s/it]instance instance_0:  23%|##3       | 140/600 [58:51<41:55,  5.47s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\optim\optimize.py:844: RuntimeWarning: Optimization failed in `gen_candidates_scipy` with the following warning(s):
+[OptimizationWarning('Optimization failed within `scipy.optimize.minimize` with status 2 and message ABNORMAL: .')]
+Trying again with a new set of initial conditions.
+  return _optimize_acqf_batch(opt_inputs=opt_inputs)
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  24%|##3       | 141/600 [1:07:55<21:18:13, 167.09s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\optim\optimize.py:844: RuntimeWarning: Optimization failed in `gen_candidates_scipy` with the following warning(s):
+[OptimizationWarning('Optimization failed within `scipy.optimize.minimize` with status 2 and message ABNORMAL: .')]
+Trying again with a new set of initial conditions.
+  return _optimize_acqf_batch(opt_inputs=opt_inputs)
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  24%|##3       | 142/600 [1:08:29<16:10:27, 127.14s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  24%|##3       | 143/600 [1:09:13<12:57:31, 102.08s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\optim\optimize.py:844: RuntimeWarning: Optimization failed in `gen_candidates_scipy` with the following warning(s):
+[OptimizationWarning('Optimization failed within `scipy.optimize.minimize` with status 2 and message ABNORMAL: .')]
+Trying again with a new set of initial conditions.
+  return _optimize_acqf_batch(opt_inputs=opt_inputs)
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\fit.py:241: OptimizationWarning: `scipy_minimize` terminated with status OptimizationStatus.FAILURE, displaying original message from `scipy.optimize.minimize`: ABNORMAL: 
+  result = optimizer(mll, closure=closure, **optimizer_kwargs)
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  24%|##4       | 144/600 [1:10:15<11:25:21, 90.18s/it] C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\optim\optimize.py:844: RuntimeWarning: Optimization failed in `gen_candidates_scipy` with the following warning(s):
+[OptimizationWarning('Optimization failed within `scipy.optimize.minimize` with status 2 and message ABNORMAL: .')]
+Trying again with a new set of initial conditions.
+  return _optimize_acqf_batch(opt_inputs=opt_inputs)
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  24%|##4       | 145/600 [1:11:30<10:49:36, 85.66s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  24%|##4       | 146/600 [1:11:41<7:58:52, 63.29s/it] C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\fit.py:241: OptimizationWarning: `scipy_minimize` terminated with status OptimizationStatus.FAILURE, displaying original message from `scipy.optimize.minimize`: ABNORMAL: 
+  result = optimizer(mll, closure=closure, **optimizer_kwargs)
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\optim\optimize.py:844: RuntimeWarning: Optimization failed in `gen_candidates_scipy` with the following warning(s):
+[OptimizationWarning('Optimization failed within `scipy.optimize.minimize` with status 2 and message ABNORMAL: .')]
+Trying again with a new set of initial conditions.
+  return _optimize_acqf_batch(opt_inputs=opt_inputs)
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+instance instance_0:  24%|##4       | 147/600 [1:16:06<15:33:56, 123.70s/it]C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+C:\Users\gabri\Download - ICH\Bachelorarbeit\Bachelorarbeit\RoBo_Benchmark\.venv311\Lib\site-packages\botorch\models\utils\assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(

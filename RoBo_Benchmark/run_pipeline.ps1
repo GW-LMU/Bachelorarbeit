@@ -35,7 +35,66 @@ $root = $PSScriptRoot
 Set-Location $root
 
 $logPath = Join-Path $root "run_log.txt"
-$python = "python"
+# .venv311 enthaelt cocoex + alle weiteren Pipeline-Abhaengigkeiten; das
+# System-"python" auf dem PATH hat cocoex nicht installiert.
+$python = Join-Path $root ".venv311\Scripts\python.exe"
+
+# Zeitstempel dieses Laufs - wird am Ende benutzt, um data/ + plots/ in
+# datierte Ordner (data/runs/<Zeitstempel>/, plots/runs/<Zeitstempel>/) zu
+# verschieben, statt die Dateien direkt in data/ bzw. plots/ zu ueberschreiben.
+$runId = Get-Date -Format "yyyyMMdd_HHmmss"
+$dataDir = Join-Path $root "data"
+$plotsDir = Join-Path $root "plots"
+$runsDataDir = Join-Path $dataDir "runs"
+$runsPlotsDir = Join-Path $plotsDir "runs"
+
+function Archive-Run {
+    param([string]$ArchiveId, [string]$Description)
+
+    $items = Get-ChildItem -Path $dataDir -Exclude "runs" -ErrorAction SilentlyContinue
+    $plotFiles = Get-ChildItem -Path $plotsDir -File -Filter "*.png" -ErrorAction SilentlyContinue
+    $rootPlot = Join-Path $root "convergence_plot.png"
+    $hasRootPlot = Test-Path $rootPlot
+
+    if (-not $items -and -not $plotFiles -and -not $hasRootPlot) {
+        return
+    }
+
+    Write-Host ""
+    Write-Host "=== $Description -> data/runs/$ArchiveId, plots/runs/$ArchiveId ===" -ForegroundColor Yellow
+
+    if ($items) {
+        $dest = Join-Path $runsDataDir $ArchiveId
+        New-Item -ItemType Directory -Force -Path $dest | Out-Null
+        foreach ($item in $items) {
+            Move-Item -Path $item.FullName -Destination $dest -Force
+        }
+    }
+    if ($plotFiles -or $hasRootPlot) {
+        $dest = Join-Path $runsPlotsDir $ArchiveId
+        New-Item -ItemType Directory -Force -Path $dest | Out-Null
+        foreach ($p in $plotFiles) {
+            Move-Item -Path $p.FullName -Destination $dest -Force
+        }
+        if ($hasRootPlot) {
+            Move-Item -Path $rootPlot -Destination $dest -Force
+        }
+    }
+}
+
+# --- 0) Vorherigen (noch nicht archivierten) Lauf zuerst wegsichern -------
+# Zeitstempel dafuer: letzte Aenderungszeit der vorhandenen Dateien in data/,
+# damit der Ordnername zum tatsaechlichen alten Lauf passt statt "jetzt".
+# Nur wenn NICHT SkipPrepare: bei -SkipPrepare soll ja genau mit den
+# vorhandenen tasks.csv/instances/ weitergerechnet werden, nicht wegarchiviert.
+if (-not $SkipPrepare) {
+    $prevItems = Get-ChildItem -Path $dataDir -Exclude "runs" -ErrorAction SilentlyContinue
+    if ($prevItems) {
+        $prevTimestamp = ($prevItems | Sort-Object LastWriteTime -Descending | Select-Object -First 1).LastWriteTime
+        $prevRunId = Get-Date $prevTimestamp -Format "yyyyMMdd_HHmmss"
+        Archive-Run -ArchiveId $prevRunId -Description "0) Vorherigen Lauf archivieren"
+    }
+}
 
 function Invoke-Step {
     param([string]$Description, [string[]]$ScriptArgs)
@@ -120,5 +179,9 @@ Invoke-Step "3d) Konvergenzplot erzeugen (plot_convergence.py)" @(
     "--out", "plots/f${Funktion}_d${Dimension}.png"
 )
 
+Archive-Run -ArchiveId $runId -Description "4) Ergebnisse dieses Laufs archivieren"
+
 Write-Host ""
 Write-Host "=== Pipeline komplett durchgelaufen. Log: $logPath ===" -ForegroundColor Green
+Write-Host "Ergebnisse dieses Laufs: data/runs/$runId" -ForegroundColor Green
+Write-Host "Plots dieses Laufs: plots/runs/$runId" -ForegroundColor Green
