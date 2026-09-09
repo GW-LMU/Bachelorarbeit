@@ -23,7 +23,8 @@ import pandas as pd
 
 ID_COLS = [
     "combination_id", "funktion", "dimension", "surrogate_model",
-    "acquisition_model", "sample_size_initial", "max_iteration", "iteration",
+    "acquisition_model", "sample_size_initial", "max_iteration", "noise_config",
+    "iteration",
 ]
 
 
@@ -37,8 +38,12 @@ def main(pattern, out_path, value_col):
     n_error = (df["status"] == "error").sum()
     df = df[df["status"] == "ok"].copy()
 
+    # aeltere results.csv-Dateien (vor Einfuehrung von noise_config) haben diese
+    # Spalte noch nicht - defensiv weglassen statt KeyError beim Pivotieren.
+    id_cols = [c for c in ID_COLS if c in df.columns]
+
     df_wide = df.pivot_table(
-        index=ID_COLS,
+        index=id_cols,
         columns="tensor_block",
         values=value_col,
     )

@@ -15,9 +15,9 @@ DATA_DIR = BASE_DIR / "data"
 # --- BO-Parameter (Kreuzprodukt ergibt die Kombinationen) ----------------
 # TEST-WERTE fuer einen lokalen Laufzeit-Messlauf auf diesem PC - fuer den
 # echten Lauf auf dem LRZ hier wieder auf die vollen Listen hochskalieren.
-FUNKTIONEN = [1,24]
+FUNKTIONEN = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24] 
 # [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]          # BBOB-Funktionen 1-24
-DIMENSIONEN = [2, 3, 5, 10, 20] 
+DIMENSIONEN = [2, 3, 5] 
 # [2, 3, 5, 10, 20, 40]                   # Suchraum-Dimensionen
 
 # je (Surrogatmodell, Akquisitionsfunktion)-Paar eine Zeile.
@@ -36,11 +36,11 @@ DIMENSIONEN = [2, 3, 5, 10, 20]
 #                                          n_cloud_samples/sub_samp_size in airbo.py
 #                                          reduzieren oder Kernel vektorisieren, siehe README.md.
 SURROGATE_AKQUISITION_PAARE = [
-    #("GausianProzess", "UCB"),
+    ("GausianProzess", "EI"),
     #("Imprecise_GausianProzess_Rodemann", "GLCB"),
     #("Relevance Pursuit", "EI"),
     #("STABLEOPT", "UCB"),
-    ("DRBO", "distributionally robust UCB-Akquisition"),
+    #("DRBO", "distributionally robust UCB-Akquisition"),
     #("AIRBO", "UCB"),
 ]
 N_SAMPLE_INIT = [5]                 # Groesse des initialen Samples
@@ -51,21 +51,21 @@ N_SAMPLE_INIT = [5]                 # Groesse des initialen Samples
 # Bedarf auch mehrere Iterationswerte pro Dimension getestet werden koennen.
 # Muss fuer jeden Wert in DIMENSIONEN einen Eintrag enthalten.
 N_ITERATION_PRO_DIMENSION = {
-    2: [30],
-    3: [60],
-    5: [80],
+    2: [100],
+    3: [100],
+    5: [100],
     10: [100],
     20: [100],
-    #40: [150],
+    40: [100],
 }
 
 # --- Statistische Wiederholungen (Tensorbloecke) -------------------------
-N_SAMPLE_STAT = 30                # Messlauf: klein gehalten, nur fuer Zeitmessung
+N_SAMPLE_STAT = 40               # Messlauf: klein gehalten, nur fuer Zeitmessung
 SEEDS = [
     48291, 730184, 15937, 904622, 318450, 67219, 845301, 290776, 513908, 76402,
     5898, 130626, 186734, 204177, 213143, 227336, 229135, 248246, 266314, 316758,
     332814, 391109, 441839, 567503, 598308, 613474, 642683, 667237, 672755, 676254,
-    #699214, 706155, 732433, 788646, 797364, 839424, 914911, 941801, 948880, 988455,
+    699214, 706155, 732433, 788646, 797364, 839424, 914911, 941801, 948880, 988455,
 ]
 
 # --- Suchraum --------------------------------------------------------------
@@ -75,11 +75,11 @@ MINUS_AREA = -5
 PLUS_AREA = 5
 
 # --- Optimum je (Funktion, Dimension) fuer den Regret -----------------------
-# f_opt (der Zielwert) kommt seit core_bo.get_bbob_fopt_exact() EXAKT aus dem
-# COCO-Observer, keine Schaetzung mehr noetig - siehe Erklaerung im Chat.
+# f_opt (der Zielwert) kommt seit prepare_tasks.get_bbob_fopt_exact() EXAKT
+# aus dem COCO-Observer, keine Schaetzung mehr noetig - siehe Erklaerung im Chat.
 #
 # x_opt (der zugehoerige Punkt) ist ueber cocoex dagegen nicht auslesbar und
-# bleibt daher eine Zufallsstichprobe-Naeherung (core_bo.estimate_bbob_argmax,
+# bleibt daher eine Zufallsstichprobe-Naeherung (prepare_tasks.estimate_bbob_argmax,
 # nur fuer die Nebenmetrik x_distance relevant). Anzahl Stichproben ist
 # dimensionsabhaengig (Fluch der Dimensionalitaet: bei gleicher Punktzahl wird
 # die [-5,5]^d-Box mit steigendem d immer duenner abgedeckt, die Naeherung an
@@ -91,7 +91,7 @@ N_OPTIMUM_ESTIMATE_SAMPLES_PRO_DIMENSION = {
     5: 2000,
     10: 5000,
     20: 20000,
-    #40: 50000,
+    40: 50000,
 }
 OPTIMUM_ESTIMATE_SEED = 999
 
@@ -122,6 +122,22 @@ EARLY_STOP_MIN_EPSILON = 1e-6
 NOISE_X_ENABLED = True
 NOISE_Y_ENABLED = False
 
+
+def noise_config_label():
+    """Menschenlesbares Label fuer die aktuelle Rauschkonfiguration - wird als
+    eigene Spalte 'noise_config' in kombinationen.csv/tasks.csv/results.csv
+    mitgefuehrt, damit jede Ergebniszeile fuer sich erkennen laesst, unter
+    welchem der drei Faelle (nur X, nur Y, X und Y) sie entstanden ist, statt
+    das nur ueber den Ausgabe-Ordnernamen des jeweiligen Laufs zu erschliessen."""
+    if NOISE_X_ENABLED and NOISE_Y_ENABLED:
+        return "xy_both"
+    elif NOISE_X_ENABLED:
+        return "x_only"
+    elif NOISE_Y_ENABLED:
+        return "y_only"
+    else:
+        return "none"
+
 # X-Rauschen auf den initialen Samples (analog add_noise_stratified),
 # angewendet einmalig in prepare_tasks.py:build_tensor_noise().
 NOISE_ANTEIL = 1.0
@@ -136,6 +152,26 @@ NOISE_SEED_RAUSCHEN = 123
 NOISE_Y_ANTEIL = 1.0                # Anteil der Y-Auswertungen, die Rauschen bekommen
 NOISE_Y_SIGMA = 0.2                 # Rauschen auf den (negierten) Zielwert
 NOISE_Y_SEED = 777
+
+# --- Zusaetzliche Ergebnis-Speicherung pro Verfahren ------------------------
+# Wenn True, werden fuer die in RESULT_PER_VERFAHREN_NAMEN gelisteten
+# Surrogatmodelle (surrogate_model-Wert, z.B. "GausianProzess") die Ergebnisse
+# ZUSAETZLICH zur zentralen results.csv (siehe run_instance.py) in einer
+# eigenen Ordnerstruktur abgelegt - ein Ordner pro Verfahren, darin eine Datei
+# je (Verfahren, Akquisitionsfunktion):
+#   <output_dir>/<Verfahren>/<Verfahren>_<Akquisitionsfunktion>_DIM[<alle DIMENSIONEN>]_<noise_config>_<Zeitstempel>.csv
+# Die Dimensionsliste im Dateinamen ist immer die volle aktive config.DIMENSIONEN
+# (nicht nur die Dimension der jeweiligen Zeile) - alle Zeilen eines Verfahrens
+# landen also in derselben Datei, unabhaengig von ihrer einzelnen Dimension.
+# Der Zeitstempel wird einmal pro run_instance.py-Aufruf gesetzt, damit
+# innerhalb eines Laufs immer in dieselbe Datei geschrieben/angehaengt wird.
+#
+# Verfahren, die hier NICHT gelistet sind, laufen unveraendert weiter - nur
+# ueber die zentrale results.csv (die weiterhin fuer Resume-Erkennung
+# (load_done_task_ids()) sowie merge_results.py/pivot_simple_regret.py
+# massgeblich ist).
+RESULT_PER_VERFAHREN_ENABLED = True
+RESULT_PER_VERFAHREN_NAMEN = ["GausianProzess"]   # z.B. ["GausianProzess", "Imprecise_GausianProzess_Rodemann"]
 
 # --- Verteilung auf die LRZ-Instanzen ---------------------------------------
 # Fuer den lokalen Lauf auf diesem PC (6 physische / 12 logische Kerne):

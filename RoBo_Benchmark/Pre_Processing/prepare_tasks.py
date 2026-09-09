@@ -1,17 +1,14 @@
-"""Erzeugt EINMALIG zentral die vollstaendige Task-Liste + Sample-Tensoren.
-
-Ausfuehren, bevor die Tasks auf die Instanzen aufgeteilt werden (split_tasks.py).
-
-    python Pre_Processing/prepare_tasks.py   (aus der ROBO_Benchmark-Wurzel)
-"""
-
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import pfade  # noqa: F401 - fuegt Main_Prozess/, BO_Verfahren/, Post_Processing/ zu sys.path hinzu
 
+import glob
 import itertools
 import json
+import re
+import shutil
+import uuid
 
 import cocoex
 import numpy as np
@@ -21,7 +18,7 @@ import config
 import core_bo
 
 
-def build_kombinationen():
+def build_kombinationen():# ✅
     rows = []
     combination_id = 0
     for funktion, dimension, (surrogate, akquisition), n_init in itertools.product(
@@ -40,28 +37,107 @@ def build_kombinationen():
                 "acquisition_model": akquisition,
                 "sample_size_initial": n_init,
                 "max_iteration": n_iter,
+                # konstant fuer den gesamten Lauf (siehe config.NOISE_X_ENABLED/
+                # NOISE_Y_ENABLED) - als eigene Spalte mitgefuehrt, damit jede
+                # Ergebniszeile selbst erkennen laesst, unter welchem
+                # Rauschzustand sie entstanden ist.
+                "noise_config": config.noise_config_label(),
             })
             combination_id += 1
     return pd.DataFrame(rows)
 
 
-def add_optimum_estimates(df_gesamt):
+def estimate_bbob_argmax(funktion, dimension, suite, lower_bound, upper_bound,
+                          n_samples, seed, instance=1):# ✅
+    """Schaetzt NUR den Punkt x_opt, an dem -f(x) im Suchraum (ungefaehr)
+    maximal wird, per Zufallsstichprobe. Wird ausschliesslich fuer die
+    Nebenmetrik x_distance gebraucht (siehe core_bo.compute_regret()) - der
+    zugehoerige Funktionswert f_opt kommt NICHT mehr von hier, sondern exakt
+    aus get_bbob_fopt_exact(), da eine Zufallsstichprobe den wahren
+    Maximalwert besonders bei hohen Dimensionen und stark zerkluefteten
+    Funktionen (z.B. BBOB-Funktion 24) deutlich unterschaetzt (siehe
+    Vergleich im Chat: bei d=20 teils >200% Abweichung vom wahren Wert). Der
+    zugehoerige x_opt bleibt aus demselben Grund zwangslaeufig ebenfalls nur
+    eine grobe Naeherung - x_distance ist entsprechend nur zur groben
+    Orientierung zu verwenden, kein belastbares Genauigkeitsmass. Wird
+    EINMAL pro (Funktion, Dimension)-Paar zentral hier aufgerufen, nicht pro
+    Task, um die Kosten bei sehr vielen Kombinationen gering zu halten.
+    """
+    problem = suite.get_problem_by_function_dimension_instance(
+        function=funktion, dimension=dimension, instance=instance
+    )
+    rng = np.random.default_rng(seed)
+    candidates = rng.uniform(lower_bound, upper_bound, size=(n_samples, dimension))
+    values = np.array([-problem(x) for x in candidates])
+    best_idx = int(np.argmax(values))
+    return candidates[best_idx]
+
+
+def get_bbob_fopt_exact(funktion, dimension, suite, instance=1):# ✅ 
+    """Liefert das EXAKTE f_opt (Maximum von -f(x)) direkt aus dem COCO-
+    Observer/Logger - keine Schaetzung noetig.
+
+    COCO kennt fuer jede BBOB-Instanz intern den wahren Minimalwert von f(x)
+    (Rohkonvention, Precision 1e-8), gibt ihn ueber die normale Problem-API
+    aber nicht heraus (Sinn eines Black-Box-Benchmarks). Haengt man jedoch
+    einen 'bbob'-Observer an und wertet die Funktion EINMAL beliebig aus
+    (z.B. am Nullpunkt), schreibt der Logger eine .dat-Datei, deren erste
+    Zeile den Wert als Kommentar enthaelt: "... - Fopt (7.948...e+01) ...".
+    Das wird hier ausgelesen und negiert (-Fopt), um dieselbe -f(x)-
+    Vorzeichenkonvention wie core_bo.evaluate_bbob_function() zu erhalten.
+
+    Der Log-Ordner wird in einen eindeutig benannten Unterordner unter
+    ./exdata/ geschrieben und danach wieder geloescht, damit nichts vom
+    Repo-Arbeitsverzeichnis uebrig bleibt (auch bei mehreren parallelen
+    Aufrufen unkritisch, da jeder Aufruf einen eigenen Unterordner bekommt).
+    """
+    problem = suite.get_problem_by_function_dimension_instance(
+        function=funktion, dimension=dimension, instance=instance
+    )
+    result_folder = f"fopt_probe_{funktion}_{dimension}_{instance}_{uuid.uuid4().hex[:8]}"
+    observer = cocoex.Observer("bbob", f"result_folder: {result_folder}")
+    try:
+        problem.observe_with(observer)
+        problem(np.zeros(dimension))  # ein einziger Dummy-Aufruf reicht, um das Log zu erzeugen
+    finally:
+        problem.free()
+
+    dat_files = glob.glob(f"exdata/{result_folder}/data_f{funktion}/*.dat")
+    if not dat_files:
+        raise RuntimeError(
+            f"COCO-Observer hat keine .dat-Datei fuer Funktion {funktion}, "
+            f"Dimension {dimension} erzeugt (erwartet unter exdata/{result_folder}/)."
+        )
+    first_line = open(dat_files[0]).readline()
+    match = re.search(r"Fopt \(([-\d.eE+]+)\)", first_line)
+    if match is None:
+        raise RuntimeError(
+            f"Konnte 'Fopt (...)' nicht aus der .dat-Kopfzeile lesen: {first_line!r}"
+        )
+    fopt_raw = float(match.group(1))
+
+    shutil.rmtree(f"exdata/{result_folder}", ignore_errors=True)
+
+    return -fopt_raw
+
+
+def add_optimum_estimates(df_gesamt):# ✅
     """Traegt je (Funktion, Dimension) EINMAL das Optimum in df_gesamt ein,
     statt es (teuer) pro Task neu zu berechnen:
 
     - f_opt ist EXAKT (kommt direkt aus dem COCO-Observer, siehe
-      core_bo.get_bbob_fopt_exact() - keine Schaetzung mehr noetig).
+      get_bbob_fopt_exact() - keine Schaetzung mehr noetig).
     - x_opt bleibt eine grobe Zufallsstichprobe-Naeherung (siehe
-      core_bo.estimate_bbob_argmax()), da der zugehoerige x-Punkt ueber
-      cocoex nicht auslesbar ist. Nur fuer die Nebenmetrik x_distance
-      relevant, nicht fuer simple_regret/immediate_regret/Early-Stop.
+      estimate_bbob_argmax()), da der zugehoerige x-Punkt ueber cocoex
+      nicht auslesbar ist. Nur fuer die Nebenmetrik x_distance relevant,
+      nicht fuer simple_regret/immediate_regret/Early-Stop.
     """
     suite = cocoex.Suite("bbob", "", "")
 
     lookup = {}
     for funktion, dimension in df_gesamt[["funktion", "dimension"]].drop_duplicates().itertuples(index=False):
-        f_opt = core_bo.get_bbob_fopt_exact(funktion, dimension, suite)
-        x_opt = core_bo.estimate_bbob_argmax(
+        f_opt = get_bbob_fopt_exact(funktion, dimension, suite)
+        x_opt = estimate_bbob_argmax(
             funktion, dimension, suite,
             config.MINUS_AREA, config.PLUS_AREA,
             n_samples=config.N_OPTIMUM_ESTIMATE_SAMPLES_PRO_DIMENSION[dimension],
@@ -83,7 +159,7 @@ def add_optimum_estimates(df_gesamt):
     return df_gesamt
 
 
-def build_tensor_noise(df_gesamt):
+def build_tensor_noise(df_gesamt):# ✅
     max_dim = int(df_gesamt["dimension"].max())
     max_samples = int(df_gesamt["sample_size_initial"].max())
 
@@ -114,7 +190,7 @@ def build_tensor_noise(df_gesamt):
     return ergebnis
 
 
-def build_tasks(df_gesamt):
+def build_tasks(df_gesamt):# ✅
     rows = []
     task_id = 0
     for combo in df_gesamt.itertuples():
@@ -129,6 +205,7 @@ def build_tasks(df_gesamt):
                 "acquisition_model": combo.acquisition_model,
                 "sample_size_initial": combo.sample_size_initial,
                 "max_iteration": combo.max_iteration,
+                "noise_config": combo.noise_config,
                 "x_opt_approx": combo.x_opt_approx,
                 "f_opt_approx": combo.f_opt_approx,
             })
@@ -154,7 +231,7 @@ def main():
     print(f"Tensor-Shape: {tensor_noise.shape}")
     print(f"Geschrieben nach: {config.DATA_DIR}")
     
-    # ✅ 
+    
 
 
 if __name__ == "__main__":

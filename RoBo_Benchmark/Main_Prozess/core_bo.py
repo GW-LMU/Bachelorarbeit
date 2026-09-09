@@ -2,12 +2,12 @@
 
 Eigenstaendige Kopie/Anpassung der Logik aus ROBO/coco_benchmark.py und
 ROBO/Standard_PY.py (dort nicht veraendert), damit ROBO_NEU ohne Abhaengigkeit
-zum alten Ordner auf jede LRZ-Instanz kopiert werden kann. Die weiteren
-robusten Varianten (Imprecise GP, Relevance Pursuit, STABLEOPT, DRBO) sind
-analog angepasste Kopien aus ROBO/, AIRBO ist eine schlanke Neuimplementierung
-nach Yang et al. 2023 (ROBO/AIRBO.py selbst war leer, siehe airbo.py fuer
-Details/Annahmen). Alle fuenf werden unten in select_and_run_variant()
-angebunden.
+zum alten Ordner auf jede LRZ-Instanz kopiert werden kann. Die Standard-GP-
+Variante liegt in gaussian_process.py, die weiteren robusten Varianten
+(Imprecise GP, Relevance Pursuit, STABLEOPT, DRBO) sind analog angepasste
+Kopien aus ROBO/, AIRBO ist eine schlanke Neuimplementierung nach Yang et al.
+2023 (ROBO/AIRBO.py selbst war leer, siehe airbo.py fuer Details/Annahmen).
+Alle sechs werden unten in select_and_run_variant() angebunden.
 """
 
 import sys
@@ -15,36 +15,15 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import pfade  # noqa: F401 - fuegt Pre_Processing/ (config) und BO_Verfahren/ zu sys.path hinzu
 
-import glob
 import json
-import re
-import shutil
-import uuid
 
-import cocoex
 import numpy as np
 import torch
 
-from botorch.models import SingleTaskGP
-from botorch.fit import fit_gpytorch_mll
-from botorch.acquisition.analytic import LogExpectedImprovement, UpperConfidenceBound
-from botorch.optim import optimize_acqf
-from botorch.models.transforms.input import Normalize
-from botorch.models.transforms.outcome import Standardize
-from gpytorch.mlls import ExactMarginalLogLikelihood
-
 import config
 
-# Hinweis: die Varianten-Module (imprecise_gp/relevance_pursuit/stable_opt/drbo)
-# werden bewusst NICHT hier oben importiert, sondern erst lazy innerhalb der
-# jeweiligen Verzweigung in select_and_run_variant(). Grund: relevance_pursuit.py
-# braucht botorch.models.relevance_pursuit_model, das erst ab einer neueren
-# botorch-Version existiert. Ein Top-Level-Import wuerde bei aelterem botorch
-# den kompletten core_bo-Import zum Absturz bringen - auch fuer Varianten wie
-# "GausianProzess", die davon gar nicht betroffen sind.
 
-
-def evaluate_bbob_function(x, funktion, dimension, suite, instance=1):
+def evaluate_bbob_function(x, funktion, dimension, suite, instance=1):# ✅
     """Negierter BBOB-Funktionswert: -f(x). BBOB-Probleme sind als
     Minimierung von f(x) definiert, mit dem bekannten (analytischen)
     Optimum im Inneren des Suchraums. Da hier durchgaengig MAXIMIERT wird
@@ -59,88 +38,11 @@ def evaluate_bbob_function(x, funktion, dimension, suite, instance=1):
     return -float(y_val)
 
 
-def estimate_bbob_argmax(funktion, dimension, suite, lower_bound, upper_bound,
-                          n_samples, seed, instance=1):
-    """Schaetzt NUR den Punkt x_opt, an dem -f(x) im Suchraum (ungefaehr)
-    maximal wird, per Zufallsstichprobe. Wird ausschliesslich fuer die
-    Nebenmetrik x_distance gebraucht (siehe compute_regret()) - der zugehoerige
-    Funktionswert f_opt kommt NICHT mehr von hier, sondern exakt aus
-    get_bbob_fopt_exact(), da eine Zufallsstichprobe den wahren Maximalwert
-    besonders bei hohen Dimensionen und stark zerkluefteten Funktionen (z.B.
-    BBOB-Funktion 24) deutlich unterschaetzt (siehe Vergleich im Chat: bei
-    d=20 teils >200% Abweichung vom wahren Wert). Der zugehoerige x_opt bleibt
-    aus demselben Grund zwangslaeufig ebenfalls nur eine grobe Naeherung -
-    x_distance ist entsprechend nur zur groben Orientierung zu verwenden,
-    kein belastbares Genauigkeitsmass. Wird EINMAL pro (Funktion, Dimension)-
-    Paar zentral in prepare_tasks.py aufgerufen, nicht pro Task, um die
-    Kosten bei sehr vielen Kombinationen gering zu halten.
-    """
-    problem = suite.get_problem_by_function_dimension_instance(
-        function=funktion, dimension=dimension, instance=instance
-    )
-    rng = np.random.default_rng(seed)
-    candidates = rng.uniform(lower_bound, upper_bound, size=(n_samples, dimension))
-    values = np.array([-problem(x) for x in candidates])
-    best_idx = int(np.argmax(values))
-    return candidates[best_idx]
-
-
-def get_bbob_fopt_exact(funktion, dimension, suite, instance=1):
-    """Liefert das EXAKTE f_opt (Maximum von -f(x)) direkt aus dem COCO-
-    Observer/Logger - keine Schaetzung noetig.
-
-    COCO kennt fuer jede BBOB-Instanz intern den wahren Minimalwert von f(x)
-    (Rohkonvention, Precision 1e-8), gibt ihn ueber die normale Problem-API
-    aber nicht heraus (Sinn eines Black-Box-Benchmarks). Haengt man jedoch
-    einen 'bbob'-Observer an und wertet die Funktion EINMAL beliebig aus
-    (z.B. am Nullpunkt), schreibt der Logger eine .dat-Datei, deren erste
-    Zeile den Wert als Kommentar enthaelt: "... - Fopt (7.948...e+01) ...".
-    Das wird hier ausgelesen und negiert (-Fopt), um dieselbe -f(x)-
-    Vorzeichenkonvention wie evaluate_bbob_function() zu erhalten.
-
-    Der Log-Ordner wird in einen eindeutig benannten Unterordner unter
-    ./exdata/ geschrieben und danach wieder geloescht, damit nichts vom
-    Repo-Arbeitsverzeichnis uebrig bleibt (auch bei mehreren parallelen
-    Aufrufen unkritisch, da jeder Aufruf einen eigenen Unterordner bekommt).
-    """
-    problem = suite.get_problem_by_function_dimension_instance(
-        function=funktion, dimension=dimension, instance=instance
-    )
-    result_folder = f"fopt_probe_{funktion}_{dimension}_{instance}_{uuid.uuid4().hex[:8]}"
-    observer = cocoex.Observer("bbob", f"result_folder: {result_folder}")
-    try:
-        problem.observe_with(observer)
-        problem(np.zeros(dimension))  # ein einziger Dummy-Aufruf reicht, um das Log zu erzeugen
-    finally:
-        problem.free()
-
-    dat_files = glob.glob(f"exdata/{result_folder}/data_f{funktion}/*.dat")
-    if not dat_files:
-        raise RuntimeError(
-            f"COCO-Observer hat keine .dat-Datei fuer Funktion {funktion}, "
-            f"Dimension {dimension} erzeugt (erwartet unter exdata/{result_folder}/)."
-        )
-    first_line = open(dat_files[0]).readline()
-    match = re.search(r"Fopt \(([-\d.eE+]+)\)", first_line)
-    if match is None:
-        raise RuntimeError(
-            f"Konnte 'Fopt (...)' nicht aus der .dat-Kopfzeile lesen: {first_line!r}"
-        )
-    fopt_raw = float(match.group(1))
-
-    shutil.rmtree(f"exdata/{result_folder}", ignore_errors=True)
-
-    return -fopt_raw
-
-
-def compute_regret(X_history, Y_history, x_opt, f_opt):
+def compute_regret(X_history, Y_history, x_opt, f_opt):# ✅
     y_values = np.asarray(Y_history, dtype=float)
     x_opt = np.asarray(x_opt, dtype=float)
 
-    x_distances = np.array([
-        np.linalg.norm(np.asarray(x, dtype=float).reshape(-1) - x_opt) for x in X_history
-    ])
-
+    x_distances = np.array([np.linalg.norm(np.asarray(x, dtype=float).reshape(-1) - x_opt) for x in X_history])
     best_so_far = np.maximum.accumulate(y_values)
     simple_regret = f_opt - best_so_far
     immediate_regret = f_opt - y_values
@@ -148,52 +50,22 @@ def compute_regret(X_history, Y_history, x_opt, f_opt):
     return best_so_far, simple_regret, immediate_regret, x_distances
 
 
-def run_gaussian_process(train_X, train_Y, dim, acquisition_func, lower_bound, upper_bound):
-    # Input auf [0,1] normalisieren + Output standardisieren: bei einem
-    # Suchraum wie [-1000, 1000] ist der GP-Fit auf Rohwerten numerisch
-    # instabil und schlaegt haeufig fehl ("not contained to the unit cube").
-    # BoTorch macht das De-/Normalisieren intern transparent, d.h. next_x
-    # kommt weiterhin in den originalen Bounds zurueck.
-    gp_bounds = torch.tensor([[lower_bound] * dim, [upper_bound] * dim], dtype=torch.double)
-    model = SingleTaskGP(
-        train_X, train_Y,
-        input_transform=Normalize(d=dim, bounds=gp_bounds),
-        outcome_transform=Standardize(m=1),
-    )
-    mll = ExactMarginalLogLikelihood(model.likelihood, model)
-    fit_gpytorch_mll(mll)
-
-    if acquisition_func == "EI":
-        acqf = LogExpectedImprovement(model, best_f=train_Y.max())
-    elif acquisition_func == "UCB":
-        acqf = UpperConfidenceBound(model, beta=2.0, maximize=True)
-    elif acquisition_func == "LCB":
-        acqf = UpperConfidenceBound(model, beta=2.0, maximize=False)
-    else:
-        raise ValueError(f"Unbekannte Akquisitionsfunktion fuer GausianProzess: {acquisition_func}")
-
-    bounds = torch.tensor([[lower_bound] * dim, [upper_bound] * dim], dtype=torch.double)
-    next_x, acq_value = optimize_acqf(
-        acqf, bounds=bounds, q=1, num_restarts=10, raw_samples=512,
-    )
-    return next_x.squeeze(0), acq_value
-
-
 def select_and_run_variant(surrogate_model, acquisition_func, train_X, train_Y, dim,
-                            lower_bound, upper_bound):
+                            lower_bound, upper_bound):# ✅
     """Analog zu waehle_und_berechne_variante() in ROBO/coco_benchmark.py.
 
     Alle Varianten haben dieselbe Signatur (train_X, train_Y, dim, acquisition_func,
     lower_bound, upper_bound) und geben (next_x, acq_value) zurueck, siehe die
-    jeweiligen run_*()-Funktionen in imprecise_gp.py / relevance_pursuit.py /
-    stable_opt.py / drbo.py / airbo.py fuer Details und modellspezifische
-    Einschraenkungen (Imprecise GP: nur dim=1; STABLEOPT: nur
+    jeweiligen run_*()-Funktionen in gaussian_process.py / imprecise_gp.py /
+    relevance_pursuit.py / stable_opt.py / drbo.py / airbo.py fuer Details und
+    modellspezifische Einschraenkungen (Imprecise GP: nur dim=1; STABLEOPT: nur
     acquisition_func="UCB"; DRBO: nur acquisition_func="distributionally
     robust UCB-Akquisition", nutzt die letzte Spalte von dim als
     Kontextvariable; AIRBO: nur acquisition_func="UCB", nimmt eine simulierte
     Gauss-Eingabeunsicherheit um jeden Punkt an, siehe airbo.py).
     """
     if surrogate_model == "GausianProzess":
+        from gaussian_process import run_gaussian_process
         return run_gaussian_process(train_X, train_Y, dim, acquisition_func, lower_bound, upper_bound)
     elif surrogate_model == "Imprecise_GausianProzess_Rodemann":
         from imprecise_gp import run_imprecise_gausian_prozess
@@ -226,7 +98,7 @@ def select_and_run_variant(surrogate_model, acquisition_func, train_X, train_Y, 
         raise ValueError(f"Unbekanntes Surrogatmodell: {surrogate_model}")
 
 
-def _make_y_noise_fn(task):
+def _make_y_noise_fn(task):# ✅
     """Baut eine Funktion, die -f(x)-Werte optional mit Rauschen versieht.
 
     Nur aktiv, wenn config.NOISE_Y_ENABLED True ist (siehe die drei Faelle
@@ -249,7 +121,7 @@ def _make_y_noise_fn(task):
     return add_noise
 
 
-def run_task(task, suite, tensor_noise, bounds, progress_callback=None):
+def run_task(task, suite, tensor_noise, bounds, progress_callback=None):# ✅ 
     """Fuehrt EINE Task komplett aus: ein (Kombination, Tensorblock)-Paar.
 
     Gibt eine Liste von Zeilen zurueck, eine pro BO-Iteration (Long-Format),

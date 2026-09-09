@@ -1,16 +1,3 @@
-"""Imprecise-Gaussian-Process-Variante (Rodemann) fuer die verteilte Pipeline.
-
-Angepasste Kopie von ROBO/Imprecise_GP.py: Default-Bounds kommen jetzt aus
-config.py (statt fest [-1000, 1000]) und der BayesOptimizer wird aus der
-lokalen (gekuerzten) uncertainty_aware_bo.py importiert, damit ROBO_NEU ohne
-Abhaengigkeit zum alten ROBO/-Ordner auskommt.
-
-Mehrdimensionale Erweiterung (dim>1): urspruenglich nur dim=1 unterstuetzt
-(skalare Kernel-Distanzen). Die Erweiterung auf dim>1 stammt aus
-homo_bo_compare_af.ipynb (Zelle 19) und nutzt die vektorisierten Kernel
-matern_nd/rbf_nd aus uncertainty_aware_bo.py. Siehe run_imprecise_gausian_prozess()
-fuer die Fallunterscheidung dim==1 vs. dim>1.
-"""
 
 import sys
 from pathlib import Path

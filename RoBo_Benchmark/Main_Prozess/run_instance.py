@@ -1,19 +1,4 @@
-"""Laeuft auf JEDER der 4 LRZ-Instanzen und rechnet ihren Task-Chunk parallel ab.
 
-Aufruf, z.B. auf instance_0 mit 10 Kernen (aus der ROBO_Benchmark-Wurzel):
-
-    python Main_Prozess/run_instance.py --instance-dir data/instances/instance_0 --workers 10
-
-Fortschritt:
-    - laufender tqdm-Balken auf der Konsole dieser Instanz
-    - status.json im Ergebnisordner wird laufend aktualisiert
-      (kann ueber check_progress.py instanzuebergreifend ausgewertet werden,
-      sobald die status.json-Dateien an einem Ort gesammelt sind)
-
-Wiederaufnahme nach Absturz/Neustart:
-    - erfolgreich erledigte Tasks stehen in results.csv (status=ok) und
-      werden beim naechsten Start automatisch uebersprungen
-"""
 
 import sys
 from pathlib import Path
@@ -41,7 +26,7 @@ import core_bo
 RESULT_COLUMNS = [
     "task_id", "combination_id", "tensor_block", "funktion", "dimension",
     "surrogate_model", "acquisition_model", "sample_size_initial",
-    "max_iteration", "iteration", "best_so_far", "simple_regret",
+    "max_iteration", "noise_config", "iteration", "best_so_far", "simple_regret",
     "immediate_regret", "x_distance", "status", "error",
 ]
 
@@ -88,6 +73,7 @@ def _write_worker_status(task_row, iteration, task_status):
             "dimension": int(task_row["dimension"]),
             "surrogate_model": task_row["surrogate_model"],
             "acquisition_model": task_row["acquisition_model"],
+            "noise_config": task_row.get("noise_config"),
             "iteration": iteration,
             "max_iteration": int(task_row["max_iteration"]),
             "task_status": task_status,  # "laeuft" | "fertig" | "fehler"
@@ -139,6 +125,57 @@ def load_done_task_ids(results_path):
         return set()
     df = pd.read_csv(results_path, usecols=["task_id", "status"])
     return set(df.loc[df["status"] == "ok", "task_id"].unique())
+
+
+def _dim_list_label():
+    """Alle aktiven Dimensionen aus config.DIMENSIONEN als Label fuers
+    Dateinamen-Format DIM[...], z.B. "DIM[2,3,5,10,20,40]"."""
+    return "DIM[" + ",".join(str(d) for d in config.DIMENSIONEN) + "]"
+
+
+class PerVerfahrenWriter:
+    """Verwaltet die zusaetzlichen Pro-Verfahren-Ergebnisdateien (siehe
+    config.RESULT_PER_VERFAHREN_ENABLED/RESULT_PER_VERFAHREN_NAMEN).
+
+    Legt pro (surrogate_model, acquisition_model) verzoegert eine eigene
+    Datei unter <output_dir>/<surrogate_model>/ an und haengt Zeilen an -
+    zusaetzlich zur zentralen results.csv, die davon unberuehrt bleibt.
+    """
+
+    def __init__(self, output_dir):
+        self.output_dir = output_dir
+        self.run_timestamp = time.strftime("%Y%m%d_%H%M%S")
+        self._handles = {}  # (surrogate_model, acquisition_model) -> (file, DictWriter)
+
+    def _writer_for(self, surrogate_model, acquisition_model):
+        key = (surrogate_model, acquisition_model)
+        if key not in self._handles:
+            verfahren_dir = self.output_dir / surrogate_model
+            verfahren_dir.mkdir(parents=True, exist_ok=True)
+            filename = (
+                f"{surrogate_model}_{acquisition_model}_{_dim_list_label()}_"
+                f"{config.noise_config_label()}_{self.run_timestamp}.csv"
+            )
+            file_path = verfahren_dir / filename
+            file_exists = file_path.exists()
+            f = open(file_path, "a", newline="")
+            writer = csv.DictWriter(f, fieldnames=RESULT_COLUMNS)
+            if not file_exists:
+                writer.writeheader()
+            self._handles[key] = (f, writer)
+        return self._handles[key]
+
+    def write_row(self, row):
+        surrogate_model = row.get("surrogate_model")
+        if surrogate_model not in config.RESULT_PER_VERFAHREN_NAMEN:
+            return
+        f, writer = self._writer_for(surrogate_model, row.get("acquisition_model"))
+        writer.writerow({col: row.get(col) for col in RESULT_COLUMNS})
+        f.flush()
+
+    def close(self):
+        for f, _ in self._handles.values():
+            f.close()
 
 
 def write_status(status_path, done, total, failed, start_time):
@@ -200,6 +237,10 @@ def main(instance_dir, workers, output_dir):
     if not file_exists:
         writer.writeheader()
 
+    # Zusaetzliche Pro-Verfahren-Ablage (siehe config.RESULT_PER_VERFAHREN_ENABLED) -
+    # schreibt NUR zusaetzlich, die zentrale results.csv oben bleibt unveraendert.
+    per_verfahren_writer = PerVerfahrenWriter(output_dir) if config.RESULT_PER_VERFAHREN_ENABLED else None
+
     start_time = time.time()
     done = len(done_ids)
     failed = 0
@@ -218,6 +259,8 @@ def main(instance_dir, workers, output_dir):
                 rows = future.result()
                 for row in rows:
                     writer.writerow({col: row.get(col) for col in RESULT_COLUMNS})
+                    if per_verfahren_writer is not None:
+                        per_verfahren_writer.write_row(row)
                 results_file.flush()
 
                 if rows and rows[0].get("status") == "error":
@@ -230,6 +273,8 @@ def main(instance_dir, workers, output_dir):
 
     write_status(status_path, done, total, failed, start_time)
     results_file.close()
+    if per_verfahren_writer is not None:
+        per_verfahren_writer.close()
     print(f"Fertig. Ergebnisse in: {results_path}")
 
 
