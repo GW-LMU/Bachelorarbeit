@@ -1,8 +1,4 @@
-"""STABLE OPT-Variante (Bogunovic et al. 2018) fuer die verteilte Pipeline.
 
-Angepasste Kopie von ROBO/StableOpt.py: einziger Unterschied sind die
-Default-Bounds, die jetzt aus config.py kommen (statt fest [-1000, 1000]).
-"""
 
 import sys
 from pathlib import Path
@@ -16,10 +12,10 @@ from botorch.models.transforms import Normalize, Standardize
 from botorch.fit import fit_gpytorch_mll
 from gpytorch.mlls import ExactMarginalLogLikelihood
 
-import config
+import config# ✅
 
 
-def _sample_ball(center, epsilon, n_samples, lower_bound, upper_bound, rng):
+def sample_ball(center, epsilon, n_samples, lower_bound, upper_bound, rng):
     """
     Zieht n_samples Punkte aus der euklidischen Kugel mit Radius epsilon um `center`
     (Delta_epsilon(x) aus Bogunovic et al. 2018), beschraenkt auf die Suchraumgrenzen.
@@ -60,8 +56,7 @@ def run_stable_opt(train_X, train_Y, dim, acquisition_func,
     if acquisition_func != "UCB":
         raise ValueError(
             f"STABLE OPT verwendet intern feste (ucb,lcb)-Konfidenzbaender; "
-            f"unbekannte/inkompatible Akquisitionsfunktion: {acquisition_func}"
-        )
+            f"unbekannte/inkompatible Akquisitionsfunktion: {acquisition_func}")
 
     if epsilon is None:
         epsilon = 0.01 * (upper_bound - lower_bound)
@@ -88,7 +83,9 @@ def run_stable_opt(train_X, train_Y, dim, acquisition_func,
             mean = posterior.mean.squeeze(-1)
             std = posterior.variance.clamp_min(1e-12).sqrt().squeeze(-1)
         beta_sqrt = beta ** 0.5
+        
         ucb = (mean + beta_sqrt * std).numpy()
+
         lcb = (mean - beta_sqrt * std).numpy()
         return ucb, lcb
 
@@ -98,15 +95,15 @@ def run_stable_opt(train_X, train_Y, dim, acquisition_func,
     best_stable_ucb = -np.inf
     x_tilde = None
     for x in x_candidates:
-        perturbed = _sample_ball(x, epsilon, n_delta_candidates, lower_bound, upper_bound, rng)
+        perturbed = sample_ball(x, epsilon, n_delta_candidates, lower_bound, upper_bound, rng)
         ucb_vals, _ = ucb_lcb(perturbed)
         stable_ucb = ucb_vals.min()
-        if stable_ucb > best_stable_ucb:
+        if stable_ucb  > best_stable_ucb:
             best_stable_ucb = stable_ucb
             x_tilde = x
 
     # 3) delta_t = argmin_{delta in Delta_eps(x~_t)} lcb_{t-1}(x~_t + delta)
-    perturbed_final = _sample_ball(x_tilde, epsilon, n_delta_candidates, lower_bound, upper_bound, rng)
+    perturbed_final = sample_ball(x_tilde, epsilon, n_delta_candidates, lower_bound, upper_bound, rng)
     _, lcb_vals = ucb_lcb(perturbed_final)
     delta_idx = np.argmin(lcb_vals)
     query_point = perturbed_final[delta_idx]
@@ -115,3 +112,46 @@ def run_stable_opt(train_X, train_Y, dim, acquisition_func,
     acq_value = torch.as_tensor(best_stable_ucb, dtype=torch.double)
 
     return next_x, acq_value
+
+
+"""
+StableOpt: Notizen
+
+Idee des Verfahrens (Bogunovic et al. 2018)
+
+Gesucht ist ein Punkt x, der auch dann noch gut ist, wenn er um bis zu ε verschoben wird (Störung δ mit ‖δ‖ ≤ ε).
+Schritt 1 (robuster Kandidat): Für jedes x wird der schlechteste UCB-Wert in seiner ε-Umgebung bestimmt. Gewählt wird das x, bei dem dieser Wert am höchsten ist:
+x̃ = argmax_x min_δ UCB(x+δ)
+Schritt 2 (Auswertungspunkt): Innerhalb der ε-Umgebung von x̃ wird die Störung δ mit dem niedrigsten LCB-Wert gewählt:
+δ = argmin_δ LCB(x̃+δ)
+Ausgewertet wird x̃ + δ, nicht x̃ selbst. So wird gezielt geprüft, ob x̃ wirklich robust ist.
+
+Umsetzung im Code (Näherung)
+
+Nicht jedes x lässt sich exakt prüfen. Deshalb werden Kandidaten gezogen:
+256 zufällige x-Kandidaten im Suchraum
+pro Kandidat 32 zufällige Punkte in der ε-Kugel, um den schlechtesten UCB-Wert zu schätzen
+Der schlechteste Fall wird dadurch nur geschätzt und fällt tendenziell zu optimistisch aus.
+
+Problem bei der Bewertung (Simple Regret)
+
+Der Benchmark bewertet die ausgewerteten Punkte, also x̃ + δ.
+Diese Punkte sind absichtlich ungünstig gewählt: Dort ist LCB minimal, das Modell also am pessimistischsten.
+Deshalb schneidet StableOpt beim Simple Regret systematisch schlechter ab. Das heißt nicht, dass jeder Punkt der schlechteste ist, sondern dass die Kennzahl nicht misst, was StableOpt optimiert.
+Empfehlung aus dem Paper:
+Als Ergebnis wird x̃T = argmax_t minδ LCB(x̃_t+δ) empfohlen, also der Kandidat, dessen schlechtester Fall am höchsten ist.
+Bewertet wird der robuste Regret: max_x minδ f(x+δ) − minδ f(x̃_T+δ)
+
+Offene Punkte (To-do)
+
+Seed setzen, damit die Läufe reproduzierbar sind. Bisher ist der Zufallsgenerator ohne Seed.
+Das Kandidaten-Sampling durch optimize_acqf ersetzen, mit einer festen δ-Menge und denselben Einstellungen wie GP-EI (num_restarts/raw_samples).
+ε an das Rauschen NOISE_SIGMA anpassen. Bisher ist ε = 0,1, das Rauschen hat aber σ = 0,2.
+x̃ zusätzlich zurückgeben und eine robuste Kennzahl speichern.
+
+Korrektur zu deinem Text:
+
+Ausgewertet wird der Punkt mit dem schlechtesten LCB-Wert in der Umgebung von x̃, nicht der mit dem schlechtesten UCB-Wert. Der schlechteste UCB-Wert wird nur für die Auswahl von x̃ gebraucht.
+Der Simple Regret ist deshalb nicht „immer der schlechteste Wert“, sondern systematisch zu pessimistisch für StableOpt.
+ 
+"""

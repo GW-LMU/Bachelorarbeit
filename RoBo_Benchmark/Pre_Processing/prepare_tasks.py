@@ -3,6 +3,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import pfade  # noqa: F401 - fuegt Main_Prozess/, BO_Verfahren/, Post_Processing/ zu sys.path hinzu
 
+import argparse
 import glob
 import itertools
 import json
@@ -213,7 +214,33 @@ def build_tasks(df_gesamt):# ✅
     return pd.DataFrame(rows)
 
 
-def main():
+def push_tasks_to_sqs(df_tasks, queue_url, region=None):
+    """Schreibt jede Zeile aus df_tasks als eigene Nachricht in die SQS-Queue
+    (fuer den AWS-Lauf: jede Instanz holt sich ihre Tasks von dort statt aus
+    einer lokal zugewiesenen tasks.csv, siehe Main_Prozess/run_instance.py).
+
+    Nutzt send_message_batch (max. 10 Nachrichten/Aufruf) statt einzelner
+    send_message-Aufrufe, um bei 500.000+ Tasks nicht 500.000 einzelne
+    API-Requests zu brauchen.
+    """
+    import boto3  # lokaler Import: boto3 nur noetig, wenn dieser Pfad genutzt wird
+
+    sqs = boto3.client("sqs", region_name=region)
+    records = df_tasks.to_dict("records")
+    total = len(records)
+
+    for start in range(0, total, 10):
+        chunk = records[start:start + 10]
+        entries = [{"Id": str(i), "MessageBody": json.dumps(row)} for i, row in enumerate(chunk)]
+        response = sqs.send_message_batch(QueueUrl=queue_url, Entries=entries)
+        failed = response.get("Failed")
+        if failed:
+            raise RuntimeError(f"SQS send_message_batch: {len(failed)} Nachrichten fehlgeschlagen: {failed}")
+
+    print(f"{total} Tasks in SQS-Queue geschrieben: {queue_url}")
+
+
+def main(sqs_queue_url=None, aws_region=None, sqs_push_enabled=None):
     config.DATA_DIR.mkdir(parents=True, exist_ok=True)
 
     df_gesamt = build_kombinationen()
@@ -230,9 +257,42 @@ def main():
     print(f"Tasks gesamt (Kombinationen x {config.N_SAMPLE_STAT} Tensorbloecke): {len(df_tasks)}")
     print(f"Tensor-Shape: {tensor_noise.shape}")
     print(f"Geschrieben nach: {config.DATA_DIR}")
-    
-    
+
+    # Schalter kommt standardmaessig aus config.SQS_PUSH_ENABLED (True/False) -
+    # per CLI-Flag explizit erzwingbar/abschaltbar, falls mal ein einzelner
+    # Lauf abweichend vom aktuellen config.py-Stand gebraucht wird.
+    push_enabled = config.SQS_PUSH_ENABLED if sqs_push_enabled is None else sqs_push_enabled
+    if push_enabled:
+        queue_url = sqs_queue_url or config.SQS_QUEUE_URL
+        region = aws_region or config.AWS_REGION
+        if not queue_url:
+            raise ValueError(
+                "SQS_PUSH_ENABLED=True, aber keine Queue-URL gesetzt "
+                "(weder config.SQS_QUEUE_URL noch --sqs-queue-url)."
+            )
+        print("Schreibe Tasks zusaetzlich in SQS-Queue...")
+        push_tasks_to_sqs(df_tasks, queue_url, region=region)
+    else:
+        print("SQS-Push deaktiviert (config.SQS_PUSH_ENABLED=False) - nur lokale Dateien geschrieben.")
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--sqs-queue-url", default=None,
+        help="Ueberschreibt config.SQS_QUEUE_URL fuer diesen Lauf.",
+    )
+    parser.add_argument(
+        "--aws-region", default=None,
+        help="Ueberschreibt config.AWS_REGION fuer diesen Lauf.",
+    )
+    parser.add_argument(
+        "--push-to-sqs", dest="push_to_sqs", action="store_true", default=None,
+        help="Erzwingt SQS-Push fuer diesen Lauf, unabhaengig von config.SQS_PUSH_ENABLED.",
+    )
+    parser.add_argument(
+        "--no-push-to-sqs", dest="push_to_sqs", action="store_false",
+        help="Unterdrueckt SQS-Push fuer diesen Lauf, unabhaengig von config.SQS_PUSH_ENABLED.",
+    )
+    args = parser.parse_args()
+    main(sqs_queue_url=args.sqs_queue_url, aws_region=args.aws_region, sqs_push_enabled=args.push_to_sqs)

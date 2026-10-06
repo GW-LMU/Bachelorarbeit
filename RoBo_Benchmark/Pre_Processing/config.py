@@ -119,8 +119,8 @@ EARLY_STOP_MIN_EPSILON = 1e-6
 #   nur X:     NOISE_X_ENABLED=True,  NOISE_Y_ENABLED=False
 #   nur Y:     NOISE_X_ENABLED=False, NOISE_Y_ENABLED=True
 #   X und Y:   NOISE_X_ENABLED=True,  NOISE_Y_ENABLED=True
-NOISE_X_ENABLED = True
-NOISE_Y_ENABLED = False
+NOISE_X_ENABLED = False
+NOISE_Y_ENABLED = True
 
 
 def noise_config_label():
@@ -172,6 +172,17 @@ NOISE_Y_SEED = 777
 # massgeblich ist).
 RESULT_PER_VERFAHREN_ENABLED = True
 RESULT_PER_VERFAHREN_NAMEN = ["GausianProzess"]   # z.B. ["GausianProzess", "Imprecise_GausianProzess_Rodemann"]
+
+# --- AWS: Tasks zusaetzlich in eine SQS-Queue schreiben ---------------------
+# Wenn True, schreibt prepare_tasks.py am Ende zusaetzlich jede Zeile aus
+# tasks.csv als Nachricht in SQS_QUEUE_URL (fuer den AWS-Lauf: jede Instanz
+# holt sich ihre Tasks dann von dort statt aus einer lokal zugewiesenen
+# tasks.csv, siehe Main_Prozess/run_instance.py).
+# Wenn False, verhaelt sich prepare_tasks.py exakt wie bisher (rein lokal,
+# kein AWS-Kontakt) - z.B. fuer lokale Testlaeufe auf diesem PC.
+SQS_PUSH_ENABLED = False
+SQS_QUEUE_URL = ""   # z.B. "https://sqs.eu-central-1.amazonaws.com/<account-id>/robo-benchmark-tasks"
+AWS_REGION = "eu-central-1"
 
 # --- Verteilung auf die LRZ-Instanzen ---------------------------------------
 # Fuer den lokalen Lauf auf diesem PC (6 physische / 12 logische Kerne):
