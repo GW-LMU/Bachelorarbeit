@@ -62,9 +62,9 @@ liegen in [`ROBO/`](ROBO/).
 
 ## Implementierte BO-Verfahren
 
-| Verfahren | Kernidee | Referenz |
-|---|---|---|
-| Standard-Gaußprozess | klassische BO als Baseline (EI/UCB/LCB) | [BoTorch] |
+| Verfahren | Kernidee | Referenz | Implementierung | 
+|---|---|---|---|
+| Standard-Gaußprozess | klassische BO als Baseline (EI/UCB/LCB) | [BoTorch] | Erfolgreich Implemtiert |
 | Imprecise Bayesian Optimization (PROBO) | Menge unsicherer Priori-Mittelwerte (Credal Set) statt einem festen Prior | [Rodemann & Augustin 2024] |
 | Relevance Pursuit | robuste, datenpunktspezifische Rauschvarianz zur automatischen Ausreißererkennung | [Ament et al. 2024] |
 | STABLEOPT | robustes Optimum über min-max UCB/LCB in einer ε-Kugel | [Bogunovic et al. 2018] |
