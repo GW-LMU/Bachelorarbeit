@@ -68,7 +68,7 @@ liegen in [`ROBO/`](ROBO/).
 | Imprecise Bayesian Optimization (PROBO) | Menge unsicherer Priori-Mittelwerte (Credal Set) statt einem festen Prior | [Rodemann & Augustin 2024] |
 | Relevance Pursuit | robuste, datenpunktspezifische Rauschvarianz zur automatischen Ausreißererkennung | [Ament et al. 2024] |
 | STABLEOPT | robustes Optimum über min-max UCB/LCB in einer ε-Kugel | [Bogunovic et al. 2018] |
-| DRBO (Distributionally Robust BO) | MMD-basierte Worst-Case-Gewichtung über Kontextverteilungen | [Kirschner et al. 2020] |
+| DRBO (Distributionally Robust BO) | MMD-basierte Worst-Case-Gewichtung über Kontextverteilungen | [Kirschner et al. 2020] | Problem mit Kontextverteilung gelöst durch Simulation. Aber nutzen fraglich für Forschungsfrage|
 | AIRBO | MMD-Kernel über Eingabeunsicherheits-Stichprobenwolken + Nyström-Approximation | [Yang et al. 2023] |
 
 Details, Einschränkungen (z. B. Dimensionsgrenzen, Laufzeit) und die genaue
